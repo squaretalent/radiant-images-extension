@@ -3,9 +3,8 @@ require File.dirname(__FILE__) + '/../spec_helper'
 describe Image do
   dataset :images
   
-  before(:each) do  
+  before(:each) do
     @image = images(:first)
-    @images = images
   end
   
   it 'should have a title' do
@@ -32,6 +31,12 @@ describe Image do
     it 'should have filters' do
  
     end
+  end
+
+  def set(key, value)
+    setting = Radiant::Config.find_by_key(key)
+    setting.destroy if setting
+    Radiant::Config.create!(:key => key, :value => value)
   end
   
 end

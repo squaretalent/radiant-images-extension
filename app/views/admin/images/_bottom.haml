@@ -1,0 +1,7 @@
+%li
+  = link_to image('plus') + " " + t("new_image"), new_admin_image_path
+%li
+  - form_tag nil, :method => 'get' do 
+    %input{ :type => "search", :id => "search", :name => "search" , :value => params[:search] }
+    = submit_tag "Search"
+    = observe_field 'search',  :frequency => 1, :update => 'images', :url =>  { :controller => 'images', :action=> 'index' }, :method => 'get', :with => "'search=' + escape(value)"

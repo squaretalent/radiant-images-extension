@@ -1,0 +1,12 @@
+- @page_title = 'New Image - ' + default_page_title
+
+- render_region :top do |top|
+  - top.title do
+    %h1 New Image
+  
+- form_for :image, @image, :url => admin_images_path, :html => {:multipart => true, :id => 'new_image', 'data-onsubmit_status'=>"Creating Image&#8230;"} do |fields|
+  #fields
+    = render :partial => 'fields', :locals => { :fields => fields }
+
+  #fields_bottom
+    = render :partial => 'fields_bottom'

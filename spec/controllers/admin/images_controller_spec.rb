@@ -4,18 +4,31 @@ describe Admin::ImagesController do
   dataset :users
   
   describe "index" do    
-    it "should only be accessible by logged in users" do
-      get :index
-      
-      response.should redirect_to(login_path)
+    
+    context "user not logged in" do
+
+      it "should redirect to login path" do
+        get :index
+
+        response.should redirect_to(login_path)
+      end
+
     end
     
-    it "should render successfully" do
-      login_as :admin
-      get :index
+    context "user logged in" do
+    
+      before :each do
+        login_as :admin
+      end
       
-      response.should be_success
+      it "should render successfully" do
+        get :index
+
+        response.should be_success
+      end
+      
     end
+    
   end
   
 end

@@ -27,13 +27,13 @@ class ImagesExtension < Radiant::Extension
       add_item 'Images', '/admin/images', :after => 'Pages'
     end
     
-    Radiant::Config['image.styles'] ||= "thumbnail=200x200#,normal=640x640#"
-    Radiant::Config['image.default']||= "original"
+    Radiant::Config['images.styles']  ||= "icon=45x45#,preview=200x200#,normal=640x640#"
+    Radiant::Config['images.default'] ||= "original"
     
-    Radiant::Config['s3.key']       ||= "123456"
-    Radiant::Config['s3.secret']    ||= "123456789ABCDEF"
-    Radiant::Config['s3.bucket']    ||= "s3.domain.tld"
-    Radiant::Config['s3.path']      ||= ":class/:basename_:style.:extension"
+    Radiant::Config['s3.key']         = "set"
+    Radiant::Config['s3.secret']      = "set"
+    Radiant::Config['s3.bucket']      = "fs.domain.com"
+    Radiant::Config['s3.path']        = ":class/:basename-:style.:extension"
     
   end
 end

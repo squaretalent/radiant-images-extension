@@ -1,0 +1,12 @@
+- @page_title = t('images') + ' - ' + default_page_title
+
+.outset
+  = render_region :top
+
+  #images_map
+    %ul#images
+      = render @images
+
+  #actions
+    %ul
+      = render 'bottom'

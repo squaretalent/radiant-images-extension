@@ -10,10 +10,8 @@ class CreateImages < ActiveRecord::Migration
       
       t.integer :created_by
       t.integer :updated_by
-      t.string  :created_at
-      t.string  :updated_at
-
-      t.timestamps
+      t.datetime :created_at
+      t.datetime :updated_at
     end
   
   end

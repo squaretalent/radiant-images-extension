@@ -4,14 +4,15 @@ class Image < ActiveRecord::Base
   belongs_to :updated_by, :class_name => 'User'
   
   before_save :assign_title
-  validates_uniqueness_of :asset_file_name, :message => 'This file already exists'
-  #validates_attachment_presence :asset, :message => "You must choose a file to upload!"
-  
+  validates_uniqueness_of :asset_file_name, :message => 'This file already exists', :allow_nil => true
+  validates_uniqueness_of :title
+
   has_attached_file :asset,
                     :styles           => lambda { Image.config_styles },
                     :whiny_thumbnails => false,
-                    :storage          => :s3, 
                     :default_url      => '/images/extensions/images/missing_:style.png',
+                    
+                    :storage          => :s3,
                     :s3_credentials   => {
                       :access_key_id      => Radiant::Config['s3.key'],
                       :secret_access_key  => Radiant::Config['s3.secret']
@@ -20,20 +21,17 @@ class Image < ActiveRecord::Base
                     :bucket           => Radiant::Config['s3.bucket'],
                     :path             => Radiant::Config['s3.path'],
                     :url              => ':s3_alias_url'
-  
-
-  def self.config_styles
-    styles = []
-    if settings = Radiant::Config['images.styles']
-      styles = settings.gsub(/\s+/,'').split(',') 
-      styles.collect{|s| s.split('=')}.inject({}) {|ha, (k, v)| ha[k.to_sym] = v; ha}
-      styles.merge
-    end
-    styles
-  end
 
   def assign_title
     self.title = self.asset_file_name if title.blank?
+  end
+
+  def basename
+    File.basename(asset_file_name, ".*") if asset_file_name
+  end
+
+  def extension
+    asset_file_name.split('.').last.downcase if asset_file_name
   end
   
 private
@@ -53,6 +51,16 @@ private
       end
       options = { :conditions => @conditions }
       self.all(options)
+    end
+    
+    def config_styles
+      styles = []
+
+      if Radiant::Config['images.styles']
+        styles = Radiant::Config['images.styles'].gsub(/\s+/,'').split(',') 
+        styles = styles.collect{|s| s.split('=')}.inject({}) {|ha, (k, v)| ha[k.to_sym] = v; ha}
+      end
+      styles
     end
   end
     
