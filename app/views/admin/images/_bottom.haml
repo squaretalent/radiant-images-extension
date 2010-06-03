@@ -1,7 +1,13 @@
-%li
-  = link_to image('plus') + " " + t("new_image"), new_admin_image_path
-%li
-  - form_tag nil, :method => 'get' do 
-    %input{ :type => "search", :id => "search", :name => "search" , :value => params[:search] }
-    = submit_tag "Search"
-    = observe_field 'search',  :frequency => 1, :update => 'images', :url =>  { :controller => 'images', :action=> 'index' }, :method => 'get', :with => "'search=' + escape(value)"
+%ul{ :style =>'float: left'}
+  - render_region :bottom do |bottom|
+    - bottom.create do
+      %li
+        = link_to image('plus') + " " + t("new_image"), new_admin_image_path
+    - bottom.search do
+      %li
+        - form_tag nil, :method => 'get' do
+          = text_field_tag 'search', params[:search], :type => 'search'
+          = observe_field 'search', :frequency => 2, :update => 'images', :url =>  { :controller => 'images', :action=> 'search' }, :method => 'get', :with => "'search=' + escape(value)"
+- render_region :paginate do |paginate|
+  - paginate.pagination do
+    = will_paginate(@images)

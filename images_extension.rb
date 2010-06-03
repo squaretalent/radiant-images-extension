@@ -3,7 +3,7 @@
 
 class ImagesExtension < Radiant::Extension
   version "0.1"
-  description "Images stores images on an s3 server"
+  description "Images stores images on s3"
   url "http://github.com/squaretalent/radiant-images-extension"
     
   extension_config do |config|
@@ -11,6 +11,8 @@ class ImagesExtension < Radiant::Extension
     config.gem 'aws-s3', :version => '0.6.2', :lib => 'aws/s3'
     config.gem 'acts_as_list', :version => '0.1.2'
     config.gem 'rr', :version => '0.10.11'
+    config.gem 'acts_as_list'
+    config.gem 'will_paginate'
   end
   
   def activate

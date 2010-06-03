@@ -7,7 +7,8 @@ class ImagesDataset < Dataset::Base
         :title              => image.to_s,
         :asset_file_name    => "#{image.to_s}.png",
         :asset_content_type => "image/png",
-        :asset_file_size    => i+1*1000
+        :asset_file_size    => i+1*1000,
+        :position           => i+1
     end
   end
 end

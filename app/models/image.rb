@@ -1,11 +1,14 @@
 class Image < ActiveRecord::Base
-  
+
   belongs_to :created_by, :class_name => 'User'
   belongs_to :updated_by, :class_name => 'User'
   
   before_save :assign_title
   validates_uniqueness_of :asset_file_name, :message => 'This file already exists', :allow_nil => true
   validates_uniqueness_of :title
+  
+  default_scope :order => 'position ASC'
+  acts_as_list
 
   has_attached_file :asset,
                     :styles           => lambda { Image.config_styles },
@@ -37,7 +40,7 @@ class Image < ActiveRecord::Base
 private
 
   class << self
-    def search(search)
+    def search(search, page)
       unless search.blank?
         queries = []
         queries << 'LOWER(title) LIKE (:term)'
@@ -49,8 +52,9 @@ private
       else
         @conditions = []
       end
-      options = { :conditions => @conditions }
-      self.all(options)
+      
+      self.all :conditions => @conditions
+      
     end
     
     def config_styles

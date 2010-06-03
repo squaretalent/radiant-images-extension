@@ -14,6 +14,26 @@ namespace :radiant do
         end
       end
       
+      desc "Migrates from Paperclipped to Images"
+      task :migrate_from_paperclipped => :environment do
+        Asset.all.each do |asset|
+          Image.create({
+            :title              => asset.title,
+            :asset_file_name    => asset.asset_file_name,
+            :asset_content_type => asset.asset_content_type,
+            :asset_file_size    => asset.asset_file_size
+          })
+        end
+
+        Radiant::Config['s3.bucket']  = Radiant::Config['assets.s3.bucket']
+        Radiant::Config['s3.key']     = Radiant::Config['assets.s3.key']
+        Radiant::Config['s3.secret']  = Radiant::Config['assets.s3.secret']
+        Radiant::Config['s3.path']    = Radiant::Config['assets.s3.path'].gsub(':class', 'assets')
+        
+        ENV['CLASS'] = 'Image'
+        Rake::Task['paperclip:refresh:thumbnails'].invoke
+      end
+      
       desc "Copies public assets of the Images to the instance public/ directory."
       task :update => :environment do
         is_svn_or_dir = proc {|path| path =~ /\.svn/ || File.directory?(path) }
