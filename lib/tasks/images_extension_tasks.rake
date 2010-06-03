@@ -17,12 +17,14 @@ namespace :radiant do
       desc "Migrates from Paperclipped to Images"
       task :migrate_from_paperclipped => :environment do
         Asset.all.each do |asset|
-          Image.create({
-            :title              => asset.title,
-            :asset_file_name    => asset.asset_file_name,
-            :asset_content_type => asset.asset_content_type,
-            :asset_file_size    => asset.asset_file_size
-          })
+          if asset.asset_type.name == :image
+            Image.create({
+              :title              => asset.title,
+              :asset_file_name    => asset.asset_file_name,
+              :asset_content_type => asset.asset_content_type,
+              :asset_file_size    => asset.asset_file_size
+            })
+          end
         end
 
         Radiant::Config['s3.bucket']  = Radiant::Config['assets.s3.bucket']
