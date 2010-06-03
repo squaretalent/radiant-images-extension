@@ -1,6 +1,6 @@
 # Radiant Images
 
-<strike>Asset</strike> IMAGE management tool, meant only to be useful to pages and extensions that need to require images.
+IMAGE management tool, meant only to be useful to pages and extensions that need to require images.
 
 ## Primary (only) Goals
 
