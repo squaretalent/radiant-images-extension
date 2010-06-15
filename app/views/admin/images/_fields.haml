@@ -10,6 +10,10 @@
     %p.title
       = fields.label :title
       = fields.text_field :title, :class => 'textbox'
+  - form.caption do
+    %p.caption
+      = fields.label :caption
+      = fields.text_field :caption, :class => 'textbox'
   - form.upload do
     %p.update
       = fields.label :asset

@@ -2,10 +2,13 @@ class Image < ActiveRecord::Base
 
   belongs_to :created_by, :class_name => 'User'
   belongs_to :updated_by, :class_name => 'User'
-  
-  before_save :assign_title
+
+  before_save :normalise_filename  
+  before_save :normalise_title
+
   validates_uniqueness_of :asset_file_name, :message => 'This file already exists', :allow_nil => true
   validates_uniqueness_of :title
+  validates_presence_of :asset_file_name
   
   default_scope :order => 'position ASC'
   acts_as_list
@@ -13,34 +16,50 @@ class Image < ActiveRecord::Base
   has_attached_file :asset,
                     :styles           => lambda { Image.config_styles },
                     :whiny_thumbnails => false,
-                    :default_url      => '/images/extensions/images/missing_:style.png',
+                    :default_url      => Radiant::Config['images.missing'] || 'missing fallback',
                     
                     :storage          => :s3,
                     :s3_credentials   => {
-                      :access_key_id      => Radiant::Config['s3.key'],
-                      :secret_access_key  => Radiant::Config['s3.secret']
+                      :access_key_id      => Radiant::Config['s3.key'] || 'missing key',
+                      :secret_access_key  => Radiant::Config['s3.secret'] || 'missing secret'
                     },
-                    :s3_host_alias    => Radiant::Config['s3.bucket'],
-                    :bucket           => Radiant::Config['s3.bucket'],
-                    :path             => Radiant::Config['s3.path'],
+                    :s3_host_alias    => Radiant::Config['s3.bucket'] || 'missing bucket',
+                    :bucket           => Radiant::Config['s3.bucket'] || 'missing bucket',
+                    :path             => Radiant::Config['s3.path'] || 'missing path',
                     :url              => ':s3_alias_url'
+  
+  Paperclip.interpolates :basename do |attachment, style|
+    attachment.instance.basename
+  end
+  
+  Paperclip.interpolates :extension do |attachment, style|
+    attachment.instance.extension
+  end
+                    
+  def normalise_filename
+    self.asset_file_name.downcase.gsub(' ', '') unless self.asset_file_name.blank?
+  end
 
-  def assign_title
-    self.title = self.asset_file_name if title.blank?
+  def normalise_title
+    self.title = asset_file_name.downcase.match('^(.*)\.')[1].gsub(/( _|-|\(|\)|\.)/, ' ') if self.title.blank?
   end
 
   def basename
-    File.basename(asset_file_name, ".*") if asset_file_name
+    asset_file_name.downcase.match('^(.*)\.')[1].gsub('(\(|\)|-|.)', '_') unless self.asset_file_name.blank?
   end
 
   def extension
-    asset_file_name.split('.').last.downcase if asset_file_name
+    asset_file_name.downcase.match('\.([^\.]+)$')[1] unless self.asset_file_name.blank?
+  end
+  
+  def url(*params)
+    self.asset.url(*params)
   end
   
 private
 
   class << self
-    def search(search, page)
+    def search(search = [],page = nil)
       unless search.blank?
         queries = []
         queries << 'LOWER(title) LIKE (:term)'
@@ -53,8 +72,10 @@ private
         @conditions = []
       end
       
-      self.all :conditions => @conditions
-      
+      self.paginate(
+        :conditions => @conditions,
+        :page => page
+      )
     end
     
     def config_styles

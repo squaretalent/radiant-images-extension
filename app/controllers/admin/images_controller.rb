@@ -8,8 +8,8 @@ class Admin::ImagesController < Admin::ResourceController
   # GET /admin/images.xml
   # GET /admin/images.json                                        AJAX and HTML
   #----------------------------------------------------------------------------
-  def search 
-    @images = Image.search params[:search], params[:p]
+  def search
+    @images = Image.search(params[:search], params[:p])
 
     respond_to do |format|
       format.html { render }

@@ -1,3 +1,8 @@
 ---
 en:
   images: Images
+  new_image: New Image
+  remove_image: Remove Image
+  remove_image_warning: Are you sure you want to delete this image as well as its ties to any other parts of the site?
+  delete_image: Delete Image
+  deleting_image: Deleting Image

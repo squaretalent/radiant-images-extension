@@ -7,28 +7,29 @@ describe ImagesController do
     context "image exists" do
       
       before :each do
-        mock(Image).find.with(anything) { Image.new() }
-        stub(Image).asset_content_type { true }
-        stub(Image).asset_file_name { true }
-        stub(Image).asset_file_size { true }
+        stub(Image).find(anything) { Image.new() }
+        stub.instance_of(Image).url { '/test/image/url' }
       end
       
       it "should render image" do
-        get :show, :id => 1
+        get :show, :id => 1, :style => 'normal'
         
         flash.now[:notice].should be_nil
-        response.should be_success
+        response.body.include?('/test/image/url')
       end
     end
     
     context "image doesn't exist" do
+      
+      before :each do        
+        mock(Image).find(anything) { raise ActiveRecord::RecordNotFound }
+      end
+      
       it "should render cant find" do
-        mock(Image).find.with(anything) { raise ActiveRecord::RecordNotFound }
+        get :show, :id => 1, :style => 'normal'
       
-        get :show, :id => 1
-      
-        flash.now[:notice].should == "Could not find image."
-        response.should_not be_success
+        flash.now[:notice].should == "Image could not be found."
+        response.body.include?(Radiant::Config['images.missing'].to_s.gsub(':style', 'normal'))
       end
     end
   end

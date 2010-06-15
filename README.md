@@ -10,11 +10,11 @@ IMAGE management tool, meant only to be useful to pages and extensions that need
 
 ### Uncomplicated
 
-> People need to be able to look at the model and instantly know what it's doing, being able to do so means they can easily extend it
+> People need to be able to look at the model and instantly know what it's doing, meaning they can easily extend it
 
 ### Easily Extendable
 
-> Images is a base for things like galleries and shop, where they don't need additional assets
+> Images is a base for things like galleries and shop, where they don't need additional asset types
 
 ### Strictly aws and paperclip
 
@@ -25,3 +25,7 @@ IMAGE management tool, meant only to be useful to pages and extensions that need
 > paperclipped is freakin' awesome, we use it and we need to be able to migrate the images over
 
     rake radiant:extensions:images:migrate_from_paperclipped
+    
+### Flash uploads
+
+> It's a messy business using the flash, but gives us the ability to poll to the server and upload multiple files

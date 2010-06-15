@@ -4,6 +4,6 @@ ActionController::Routing::Routes.draw do |map|
     admin.resources :images, :collection => { :search => :get }
   end
 
-  map.resources :images, :only => :show
+  map.images 'images/:id/:style', :controller => 'images', :action => 'show', :defaults => { :style => Radiant::Config['images.default'] }
   
 end

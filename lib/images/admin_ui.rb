@@ -13,7 +13,7 @@ module Images
             returning OpenStruct.new do |image|
               image.edit = Radiant::AdminUI::RegionSet.new do |edit|
                 edit.top.concat %w{ title }
-                edit.form.concat %w{ asset title upload popups }
+                edit.form.concat %w{ asset title caption upload popups }
                 edit.form_bottom.concat %w{ buttons timestamps }
               end
               image.new = image.edit
