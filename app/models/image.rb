@@ -59,7 +59,7 @@ class Image < ActiveRecord::Base
 private
 
   class << self
-    def search(search = [],page = nil)
+    def search(search = [], page = nil, pp = 2)
       unless search.blank?
         queries = []
         queries << 'LOWER(title) LIKE (:term)'
@@ -74,7 +74,8 @@ private
       
       self.paginate(
         :conditions => @conditions,
-        :page => page
+        :page => page,
+        :per_page => pp
       )
     end
     

@@ -2,14 +2,14 @@ class Admin::ImagesController < Admin::ResourceController
   
   before_filter :index_assets, :only => [ :index ]
   before_filter :edit_assets, :only => [ :show, :edit ]
-  
+
   # GET /admin/images
   # GET /admin/images.js
   # GET /admin/images.xml
   # GET /admin/images.json                                        AJAX and HTML
   #----------------------------------------------------------------------------
-  def search
-    @images = Image.search(params[:search], params[:p])
+  def index
+    @images = Image.search(params[:search], params[:p], params[:pp])
 
     respond_to do |format|
       format.html { render }

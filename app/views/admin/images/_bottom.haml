@@ -7,7 +7,7 @@
       %li
         - form_tag nil, :method => 'get' do
           = text_field_tag 'search', params[:search], :type => 'search'
-          = observe_field 'search', :frequency => 2, :update => 'images', :url =>  { :controller => 'images', :action=> 'search' }, :method => 'get', :with => "'search=' + escape(value)"
+          = observe_field 'search', :frequency => 2, :update => 'images', :url =>  { :controller => 'images', :action=> 'index' }, :method => 'get', :with => "'search=' + escape(value)"
 - render_region :paginate do |paginate|
   - paginate.pagination do
-    = will_paginate(@images)
+    = pagination_for(@images)
