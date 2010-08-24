@@ -8,6 +8,12 @@ class Admin::ImagesController < Admin::ResourceController
   # GET /admin/images.xml
   # GET /admin/images.json                                        AJAX and HTML
   #----------------------------------------------------------------------------
+  
+  def index
+    @images = Image.paginate :page => params[:page], :per_page => 20
+  end
+  
+  
   def search 
     @images = Image.search params[:search], params[:p]
 
