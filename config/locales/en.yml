@@ -1,3 +1,8 @@
 ---
 en:
   images: Images
+  new_image: 'New Image'
+  remove_image: 'Remove Image'
+  delete_image: 'Delete Image'
+  text.remove_image.warning: 'Are you sure you want to permanently remove the following Images?'
+  
