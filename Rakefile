@@ -2,11 +2,15 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "radiant-images-extension"
-    gem.summary = %Q{Images Extension for Radiant CMS}
-    gem.description = %Q{Describe your extension here}
-    gem.email = "dirk.kelly@squaretalent.com"
-    gem.homepage = "http://yourwebsite.com/images"
-    gem.authors = ["dirkkelly"]
+    gem.summary = 'Images Extension for Radiant CMS'
+    gem.description = 'Image Radiant Extension management tool, meant only to be useful to pages and extensions that need to require images.'
+    gem.email = "info@squaretalent.com"
+    gem.homepage = "http://github.com/squaretalent/radiant-images-extension"
+    gem.authors = ['squaretalent']
+    gem.add_dependency 'paperclip',     '2.3.1.1'
+    gem.add_dependency 'aws-s3',        '0.6.2'
+    gem.add_dependency 'acts_as_list',  '0.1.2'
+    gem.add_dependency 'will_paginate'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 rescue LoadError
