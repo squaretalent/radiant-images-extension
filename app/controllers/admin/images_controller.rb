@@ -12,6 +12,24 @@ class Admin::ImagesController < Admin::ResourceController
   def index
     @images = Image.paginate :page => params[:page], :per_page => 20
   end
+
+  
+  def create
+    @image = Image.new(params[:image])
+    
+    begin
+      if @image.save
+        redirect_to admin_images_url
+      else
+        render :action => 'new'
+      end
+    rescue Exception => e
+      flash[:error] = e.to_s
+      render :action => 'new'
+    end
+    
+        
+  end
   
   
   def search 
