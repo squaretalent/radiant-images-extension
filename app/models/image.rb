@@ -24,6 +24,9 @@ class Image < ActiveRecord::Base
                     :bucket           => Radiant::Config['s3.bucket'],
                     :path             => Radiant::Config['s3.path'],
                     :url              => ':s3_alias_url'
+                    
+  validates_attachment_presence :asset
+  validates_attachment_content_type :asset, :content_type => ['image/jpeg', 'image/png', 'image/gif']
 
   def assign_title
     self.title = self.asset_file_name if title.blank?

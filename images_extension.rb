@@ -10,7 +10,6 @@ class ImagesExtension < Radiant::Extension
     config.gem 'paperclip', :version => '2.3.1.1'
     config.gem 'aws-s3', :version => '0.6.2', :lib => 'aws/s3'
     config.gem 'acts_as_list', :version => '0.1.2'
-    config.gem 'acts_as_list'
     config.gem 'will_paginate'
     
     if RAILS_ENV == :test
