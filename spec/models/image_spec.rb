@@ -4,6 +4,7 @@ describe Image do
   dataset :images
   
   before(:each) do
+    stub(AWS::S3::Base).establish_connection!
     @image = images(:first)
   end
   
