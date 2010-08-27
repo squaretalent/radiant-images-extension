@@ -34,10 +34,5 @@ describe Image do
     end
   end
 
-  def set(key, value)
-    setting = Radiant::Config.find_by_key(key)
-    setting.destroy if setting
-    Radiant::Config.create!(:key => key, :value => value)
-  end
   
 end
