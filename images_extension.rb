@@ -19,10 +19,19 @@ class ImagesExtension < Radiant::Extension
   end
   
   def activate
+    
+    unless Radiant::Extension.descendants.any? { |extension| extension.class == 'SettingsExtension' }
+      warn 'Error: The Images extension requires the Settings extension to be installed.'
+      warn 'Either install the Settings extension or remove Images.'
+      exit(1)
+    end
+
     unless defined? admin.image
       Radiant::AdminUI.send :include, Images::AdminUI
       admin.image = Radiant::AdminUI.load_default_image_regions
     end
+    
+    
     
     Page.send :include, Images::ImageTags, Images::PageExtensions
 
