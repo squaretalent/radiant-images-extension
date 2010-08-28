@@ -13,7 +13,7 @@ class ImagesExtension < Radiant::Extension
     config.gem 'will_paginate'
     
     if RAILS_ENV == :test
-      config.gem 'rr', :version => '0.10.11'
+      config.gem 'rr', :version => '1.0.0'
     end
     
   end
