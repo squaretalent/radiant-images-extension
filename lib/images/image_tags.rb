@@ -121,7 +121,7 @@ module Images
       specify which size version of the image is to be used.
       
       *Usage:*
-      <pre><code><r:images:tag [title="image_title"] [size="icon|thumbnail"]></code></pre>
+      <pre><code><r:images:tag [title="image_title"] [size="icon|original"]></code></pre>
     }
     tag 'images:tag' do |tag|
       image, options = image_and_options(tag)
