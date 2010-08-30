@@ -49,6 +49,42 @@ describe Images::ImageTags do
       @images.each { |image| expected += image.url }
       pages(:home).should render(content).as(expected)
     end
+    
+    it 'should only run through however many images we specify with limit' do
+      content = '<r:images:each limit="2"><r:images:url/></r:images:each>'
+      expected = ''
+      @images[0..1].each { |image| expected += image.url }
+      pages(:home).should render(content).as(expected)
+    end
+    
+    it 'should start at the image number we give it using offset' do
+      content = '<r:images:each limit="2" offset="1"><r:images:url/></r:images:each>'
+      expected = ''
+      @images[1..2].each { |image| expected += image.url }
+      pages(:home).should render(content).as(expected)
+    end
+    
+    it 'should display images in the order we give' do
+      # asc
+      content = '<r:images:each order="asc" by="position"><r:images:url/></r:images:each>'
+      expected = ''
+      @images.each { |image| expected += image.url }
+      pages(:home).should render(content).as(expected)
+      
+      #desc
+      content = '<r:images:each order="desc" by="position"><r:images:url/></r:images:each>'
+      expected = ''
+      @images.reverse.each { |image| expected += image.url }
+      pages(:home).should render(content).as(expected)
+    end
+    
+    it 'should allow us to order images by title' do
+      content = '<r:images:each order="asc" by="title"><r:images:url/></r:images:each>'
+      expected = ''
+      @images.sort! { |a,b| a.title <=> b.title }
+      @images.each { |image| expected += image.url }
+      pages(:home).should render(content).as(expected)
+    end
         
   end
   
