@@ -107,11 +107,13 @@ module Images
     end
 
     desc %{
-      Outputs the full URL of the image including the filename.
+      Outputs the full URL of the image including the filename. Specify the style
+      using the style option.
     }
     tag 'images:url' do |tag|
+      style = tag.attr['style'] || :original
       image, options = image_and_options(tag)
-      image.asset_file_name rescue nil
+      image.url(style) rescue nil
     end
 
     desc %{
