@@ -1,5 +1,94 @@
 module Images
   module ImageTags
+    include Radiant::Taggable
+
+    desc %{
+      The namespace for referencing images. You may specify the title
+      attribute for this tag to use only images with the specified title.
+      
+      *Usage:* 
+      <pre><code><r:images [title="image_title"]>...</r:images></code></pre>
+    }
+    tag 'images' do |tag|
+      tag.locals.image = Image.find_by_title(tag.attr['title']) || Image.find(tag.attr['id']) unless tag.attr.empty?
+      tag.expand
+    end
     
+    desc %{
+      Goes through each of the available images.
+      Use the limit and offset attributes to render a specific number of images.
+      Use the by and order attributes to control the order of images.
+      *Usage:* 
+      <pre><code><r:images:each [limit=0] [offset=0] [order="asc|desc"] [by="position|title|..."]>...</r:images:each></code></pre>
+    }
+    tag 'images:each' do |tag|
+      options = tag.attr.dup
+      result = []
+      images = tag.locals.images.find(:all, images_find_options(tag))
+      tag.locals.images = images
+      images.each do |image|
+        tag.locals.image = image
+        result << tag.expand
+      end
+      result
+    end
+    
+    desc %{
+        Renders the contained elements only if the current image is the first.
+
+        *Usage:*
+        <pre><code><r:if_first>...</r:if_first></code></pre>
+      }
+      tag 'image:if_first' do |tag|
+        images = tag.locals.images
+        image = tag.locals.image
+        if image == images.first
+          tag.expand
+        end
+      end
+      
+    desc %{
+        Renders the contained elements only if the current image is not the first.
+
+        *Usage:*
+        <pre><code><r:unless_first>...</r:unless_first></code></pre>
+      }
+      tag 'image:unless_first' do |tag|
+        images = tag.locals.images
+        image = tag.locals.image
+        if image != images.first
+          tag.expand
+        end
+      end
+      
+    desc %{
+        Renders the contained elements only if the current contextual page has one or
+        more image. The min_count attribute specifies the minimum number of required
+        images.
+
+        *Usage:*
+        <pre><code><r:if_images [min_count="n"]>...</r:if_images></code></pre>
+      }
+      tag 'if_images' do |tag|
+        count = tag.attr['min_count'] && tag.attr['min_count'].to_i || 1
+        images = tag.locals.images.count
+        tag.expand if images >= count
+      end
+      
+    desc %{
+        Renders the contained elements only if the current contextual page does not
+        have one or more image. The min_count attribute specifies the minimum number 
+        of required images.
+
+        *Usage:*
+        <pre><code><r:if_images [min_count="n"]>...</r:if_images></code></pre>
+      }
+      tag 'unless_images' do |tag|
+        count = tag.attr['min_count'] && tag.attr['min_count'].to_i || 1
+        images = tag.locals.images.count
+        tag.expand unless images >= count
+      end
+
+
   end
 end
