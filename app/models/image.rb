@@ -20,11 +20,9 @@ class Image < ActiveRecord::Base
                       :access_key_id      => Radiant::Config['s3.key'],
                       :secret_access_key  => Radiant::Config['s3.secret']
                     },
-                    :s3_host_alias    => Radiant::Config['s3.bucket'],
                     :bucket           => Radiant::Config['s3.bucket'],
-                    :path             => Radiant::Config['s3.path'],
-                    :url              => ':s3_alias_url'
-                    
+                    :path             => Radiant::Config['s3.path']
+                                        
   validates_attachment_presence :asset
   validates_attachment_content_type :asset, :content_type => ['image/jpeg', 'image/png', 'image/gif']
 
