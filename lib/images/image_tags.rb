@@ -18,6 +18,7 @@ module Images
       Goes through each of the available images.
       Use the limit and offset attributes to render a specific number of images.
       Use the by and order attributes to control the order of images.
+      
       *Usage:* 
       <pre><code><r:images:each [limit=0] [offset=0] [order="asc|desc"] [by="position|title|..."]>...</r:images:each></code></pre>
     }
@@ -34,12 +35,26 @@ module Images
     end
     
     desc %{
-        Renders the contained elements only if the current image is the first.
+      Renders the first image.
+      
+      *Usage:* 
+      <pre><code><r:images:first>...</r:images:first></code></pre>
+    }
+    tag 'images:first' do |tag|
+      images = tag.locals.images
+      if first = images.first
+        tag.locals.image = first.image
+        tag.expand
+      end
+    end
+    
+    desc %{
+      Renders the contained elements only if the current image is the first.
 
-        *Usage:*
-        <pre><code><r:if_first>...</r:if_first></code></pre>
-      }
-      tag 'image:if_first' do |tag|
+      *Usage:*
+      <pre><code><r:if_first>...</r:if_first></code></pre>
+    }
+    tag 'images:if_first' do |tag|
         images = tag.locals.images
         image = tag.locals.image
         if image == images.first
@@ -48,12 +63,12 @@ module Images
       end
       
     desc %{
-        Renders the contained elements only if the current image is not the first.
+      Renders the contained elements only if the current image is not the first.
 
-        *Usage:*
-        <pre><code><r:unless_first>...</r:unless_first></code></pre>
-      }
-      tag 'image:unless_first' do |tag|
+      *Usage:*
+      <pre><code><r:unless_first>...</r:unless_first></code></pre>
+    }
+    tag 'images:unless_first' do |tag|
         images = tag.locals.images
         image = tag.locals.image
         if image != images.first
@@ -62,33 +77,49 @@ module Images
       end
       
     desc %{
-        Renders the contained elements only if the current contextual page has one or
-        more image. The min_count attribute specifies the minimum number of required
-        images.
+      Renders the contained elements only if the current contextual page has one or
+      more image. The min_count attribute specifies the minimum number of required
+      images.
 
-        *Usage:*
-        <pre><code><r:if_images [min_count="n"]>...</r:if_images></code></pre>
-      }
-      tag 'if_images' do |tag|
+      *Usage:*
+      <pre><code><r:if_images [min_count="n"]>...</r:if_images></code></pre>
+    }
+    tag 'if_images' do |tag|
         count = tag.attr['min_count'] && tag.attr['min_count'].to_i || 1
         images = tag.locals.images.count
         tag.expand if images >= count
       end
       
     desc %{
-        Renders the contained elements only if the current contextual page does not
-        have one or more image. The min_count attribute specifies the minimum number 
-        of required images.
+      Renders the contained elements only if the current contextual page does not
+      have one or more image. The min_count attribute specifies the minimum number 
+      of required images.
 
-        *Usage:*
-        <pre><code><r:if_images [min_count="n"]>...</r:if_images></code></pre>
-      }
-      tag 'unless_images' do |tag|
+      *Usage:*
+      <pre><code><r:if_images [min_count="n"]>...</r:if_images></code></pre>
+    }
+    tag 'unless_images' do |tag|
         count = tag.attr['min_count'] && tag.attr['min_count'].to_i || 1
         images = tag.locals.images.count
         tag.expand unless images >= count
       end
 
+    desc %{
+      Outputs the full URL of the image including the filename.
+    }
+    tag 'images:url' do |tag|
+      image, options = image_and_options(tag)
+      image.asset_file_name rescue nil
+    end
+
+    desc %{
+      Outputs the image tag for the current image. Use the size option to 
+      specify which size version of the image is to be used.
+      
+      *Usage:*
+      <pre><code><r:images:tag [title="image_title"] [size="icon|thumbnail"]></code></pre>
+    }
+    tag 'images:tag'
 
   end
 end
