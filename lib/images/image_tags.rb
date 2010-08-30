@@ -129,7 +129,7 @@ module Images
       alt = " alt='#{image.title}'" unless tag.attr['alt'] rescue nil
       attributes = options.inject('') { |s, (k, v)| s << %{#{k.downcase}="#{v}" } }.strip
       attributes << alt unless alt.nil?
-      url = image.thumbnail(size)
+      url = image.url size
       %{<img src="#{url}" #{attributes unless attributes.empty?} />} rescue nil
     end
     
