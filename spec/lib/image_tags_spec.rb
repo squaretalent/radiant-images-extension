@@ -2,6 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Images::ImageTags do
   dataset :pages
+  dataset :images
   
   describe '<r:images>' do
     
@@ -15,6 +16,24 @@ describe Images::ImageTags do
       pages(:home).should render(content)
     end
     
+  end
+  
+  describe '<r:images:each>' do
+    
+    it 'should run through all of our images' do
+      content = '<r:images:each>hi!</r:images:each>'
+      expected = ''
+      Image.count.times { expected += 'hi!' }
+      pages(:home).should render(content).as(expected)
+    end
+    
+    it 'should be running through the image objects' do
+      content = '<r:images:each><r:images:url/></r:images:each>'
+      expected = ''
+      Image.all.each { |image| expected += image.asset_file_name }
+      pages(:home).should render(content).as(expected)
+    end
+        
   end
   
   
