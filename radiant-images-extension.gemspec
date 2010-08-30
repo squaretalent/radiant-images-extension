@@ -77,25 +77,22 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<paperclip>, [">= 2.3.1.1"])
+      s.add_runtime_dependency(%q<paperclip>, ["~> 2.3.1.1"])
       s.add_runtime_dependency(%q<aws-s3>, [">= 0.6.2"])
       s.add_runtime_dependency(%q<acts_as_list>, [">= 0.1.2"])
-      s.add_runtime_dependency(%q<will_paginate>, [">= 0"])
       s.add_development_dependency(%q<rspec>, [">= 1.3.0"])
       s.add_development_dependency(%q<rr>, [">= 1.0.0"])
     else
-      s.add_dependency(%q<paperclip>, [">= 2.3.1.1"])
+      s.add_dependency(%q<paperclip>, ["~> 2.3.1.1"])
       s.add_dependency(%q<aws-s3>, [">= 0.6.2"])
       s.add_dependency(%q<acts_as_list>, [">= 0.1.2"])
-      s.add_dependency(%q<will_paginate>, [">= 0"])
       s.add_dependency(%q<rspec>, [">= 1.3.0"])
       s.add_dependency(%q<rr>, [">= 1.0.0"])
     end
   else
-    s.add_dependency(%q<paperclip>, [">= 2.3.1.1"])
+    s.add_dependency(%q<paperclip>, ["~> 2.3.1.1"])
     s.add_dependency(%q<aws-s3>, [">= 0.6.2"])
     s.add_dependency(%q<acts_as_list>, [">= 0.1.2"])
-    s.add_dependency(%q<will_paginate>, [">= 0"])
     s.add_dependency(%q<rspec>, [">= 1.3.0"])
     s.add_dependency(%q<rr>, [">= 1.0.0"])
   end
