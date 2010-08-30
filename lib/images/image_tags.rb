@@ -1,6 +1,8 @@
 module Images
   module ImageTags
     include Radiant::Taggable
+    
+    class TagError < StandardError; end
 
     desc %{
       The namespace for referencing images. You may specify the title
@@ -25,7 +27,7 @@ module Images
     tag 'images:each' do |tag|
       options = tag.attr.dup
       result = []
-      images = tag.locals.images.find(:all, images_find_options(tag))
+      images = Image.find(:all, images_find_options(tag))
       tag.locals.images = images
       images.each do |image|
         tag.locals.image = image
@@ -143,7 +145,7 @@ module Images
 
       def images_find_options(tag)
         attr = tag.attr.symbolize_keys
-        by = attr[:by] || 'page_attachments.position'
+        by = attr[:by] || 'position'
         order = attr[:order] || 'asc'
 
         options = {
