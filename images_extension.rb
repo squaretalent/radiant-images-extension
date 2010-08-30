@@ -43,6 +43,7 @@ class ImagesExtension < Radiant::Extension
     Radiant::Config['images.styles']  ||= "icon=45x45#,preview=200x200#,normal=640x640#"
     Radiant::Config['images.default'] ||= "original"
     
+    Radiant::Config['s3.host_alias']  ||= ""
     Radiant::Config['s3.key']         ||= "set"
     Radiant::Config['s3.secret']      ||= "set"
     Radiant::Config['s3.bucket']      ||= "fs.domain.com"

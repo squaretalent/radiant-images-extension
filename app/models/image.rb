@@ -40,6 +40,16 @@ class Image < ActiveRecord::Base
     asset_file_name.split('.').last.downcase if asset_file_name
   end
   
+  # returns the url of the asset
+  def url(style = :original, secure = false)
+    style  = style.to_s
+    prefix = secure ? 'https://' : 'http://'
+    domain = Radiant::Config['s3.host_alias'].empty? ? 's3.amazonaws.com' : Radiant::Config['s3.host_alias']
+    bucket = Radiant::Config['s3.host_alias'].empty? ? '/' + Radiant::Config['s3.bucket'] : ''
+    
+    url = prefix + domain + bucket + '/images/' + basename + '-' + style + '.' + extension
+  end
+  
 private
 
   class << self

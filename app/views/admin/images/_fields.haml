@@ -2,10 +2,10 @@
   - form.asset do
     %p.asset
       - unless @image.new_record?
-        = image_tag @image.asset.url(:preview)
+        = image_tag @image.url(:preview)
         - @image.asset.styles.each do |style, attrs|
           - unless style.to_sym == :preview
-            = link_to style.to_s, @image.asset.url(style.to_sym)
+            = link_to style.to_s, @image.url(style.to_sym)
   - form.title do
     %p.title
       = fields.label :title
