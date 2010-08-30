@@ -1,6 +1,6 @@
 class ImagesDataset < Dataset::Base
   def load
-    images = [ :first, :second ]
+    images = [ :first, :second, :third ]
     
     images.each_with_index do |image, i|
       create_record :image, image.to_sym,

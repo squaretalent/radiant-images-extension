@@ -6,10 +6,7 @@ describe Admin::ImagesController do
   
   before :all do
     @image = images(:first)
-    @images = [
-      images(:first),
-      images(:second)
-    ]
+    @images = Image.all
   end
    
     
