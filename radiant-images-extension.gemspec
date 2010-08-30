@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["squaretalent"]
-  s.date = %q{2010-08-26}
+  s.date = %q{2010-08-30}
   s.description = %q{Image Radiant Extension management tool, meant only to be useful to pages and extensions that need to require images.}
   s.email = %q{info@squaretalent.com}
   s.extra_rdoc_files = [
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
     ".gitignore",
      "README.md",
      "Rakefile",
+     "VERSION",
      "app/controllers/admin/images_controller.rb",
      "app/controllers/images_controller.rb",
      "app/models/image.rb",
@@ -48,9 +49,11 @@ Gem::Specification.new do |s|
      "public/javascripts/admin/extensions/images/edit.js",
      "public/stylesheets/sass/admin/extensions/images/edit.sass",
      "public/stylesheets/sass/admin/extensions/images/index.sass",
+     "radiant-images-extension.gemspec",
      "spec/controllers/admin/images_controller_spec.rb",
      "spec/controllers/images_controller_spec.rb",
      "spec/datasets/images.rb",
+     "spec/lib/image_tags_spec.rb",
      "spec/models/image_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb"
@@ -64,6 +67,7 @@ Gem::Specification.new do |s|
     "spec/controllers/admin/images_controller_spec.rb",
      "spec/controllers/images_controller_spec.rb",
      "spec/datasets/images.rb",
+     "spec/lib/image_tags_spec.rb",
      "spec/models/image_spec.rb",
      "spec/spec_helper.rb"
   ]
@@ -73,21 +77,27 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<paperclip>, ["= 2.3.1.1"])
-      s.add_runtime_dependency(%q<aws-s3>, ["= 0.6.2"])
-      s.add_runtime_dependency(%q<acts_as_list>, ["= 0.1.2"])
+      s.add_runtime_dependency(%q<paperclip>, [">= 2.3.1.1"])
+      s.add_runtime_dependency(%q<aws-s3>, [">= 0.6.2"])
+      s.add_runtime_dependency(%q<acts_as_list>, [">= 0.1.2"])
       s.add_runtime_dependency(%q<will_paginate>, [">= 0"])
+      s.add_development_dependency(%q<rspec>, [">= 1.3.0"])
+      s.add_development_dependency(%q<rr>, [">= 1.0.0"])
     else
-      s.add_dependency(%q<paperclip>, ["= 2.3.1.1"])
-      s.add_dependency(%q<aws-s3>, ["= 0.6.2"])
-      s.add_dependency(%q<acts_as_list>, ["= 0.1.2"])
+      s.add_dependency(%q<paperclip>, [">= 2.3.1.1"])
+      s.add_dependency(%q<aws-s3>, [">= 0.6.2"])
+      s.add_dependency(%q<acts_as_list>, [">= 0.1.2"])
       s.add_dependency(%q<will_paginate>, [">= 0"])
+      s.add_dependency(%q<rspec>, [">= 1.3.0"])
+      s.add_dependency(%q<rr>, [">= 1.0.0"])
     end
   else
-    s.add_dependency(%q<paperclip>, ["= 2.3.1.1"])
-    s.add_dependency(%q<aws-s3>, ["= 0.6.2"])
-    s.add_dependency(%q<acts_as_list>, ["= 0.1.2"])
+    s.add_dependency(%q<paperclip>, [">= 2.3.1.1"])
+    s.add_dependency(%q<aws-s3>, [">= 0.6.2"])
+    s.add_dependency(%q<acts_as_list>, [">= 0.1.2"])
     s.add_dependency(%q<will_paginate>, [">= 0"])
+    s.add_dependency(%q<rspec>, [">= 1.3.0"])
+    s.add_dependency(%q<rr>, [">= 1.0.0"])
   end
 end
 

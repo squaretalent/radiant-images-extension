@@ -7,10 +7,12 @@ begin
     gem.email = "info@squaretalent.com"
     gem.homepage = "http://github.com/squaretalent/radiant-images-extension"
     gem.authors = ['squaretalent']
-    gem.add_dependency 'paperclip',     '2.3.1.1'
-    gem.add_dependency 'aws-s3',        '0.6.2'
-    gem.add_dependency 'acts_as_list',  '0.1.2'
+    gem.add_dependency 'paperclip',         '>= 2.3.1.1'
+    gem.add_dependency 'aws-s3',            '>= 0.6.2'
+    gem.add_dependency 'acts_as_list',      '>= 0.1.2'
     gem.add_dependency 'will_paginate'
+    gem.add_development_dependency 'rspec', '>= 1.3.0'
+    gem.add_development_dependency 'rr',    '>= 1.0.0'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 rescue LoadError
