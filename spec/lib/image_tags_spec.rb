@@ -34,7 +34,7 @@ describe Images::ImageTags do
     it 'should be running through the image objects' do
       content = '<r:images:each><r:images:url/></r:images:each>'
       expected = ''
-      @images.each { |image| expected += image.asset_file_name }
+      @images.each { |image| expected += image.url }
       pages(:home).should render(content).as(expected)
     end
         
