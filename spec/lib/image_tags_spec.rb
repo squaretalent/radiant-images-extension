@@ -4,6 +4,10 @@ describe Images::ImageTags do
   dataset :pages
   dataset :images
   
+  before(:all) do
+    @images = Image.all
+  end
+  
   describe '<r:images>' do
     
     it 'should render without errors' do
@@ -23,14 +27,14 @@ describe Images::ImageTags do
     it 'should run through all of our images' do
       content = '<r:images:each>hi!</r:images:each>'
       expected = ''
-      Image.count.times { expected += 'hi!' }
+      @images.length.times { expected += 'hi!' }
       pages(:home).should render(content).as(expected)
     end
     
     it 'should be running through the image objects' do
       content = '<r:images:each><r:images:url/></r:images:each>'
       expected = ''
-      Image.all.each { |image| expected += image.asset_file_name }
+      @images.each { |image| expected += image.asset_file_name }
       pages(:home).should render(content).as(expected)
     end
         
