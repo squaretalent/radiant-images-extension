@@ -119,7 +119,40 @@ module Images
       *Usage:*
       <pre><code><r:images:tag [title="image_title"] [size="icon|thumbnail"]></code></pre>
     }
-    tag 'images:tag'
+    tag 'images:tag' do |tag|
+      image, options = image_and_options(tag)
+      size = options['size'] ? options.delete('size') : 'original'
+      alt = " alt='#{image.title}'" unless tag.attr['alt'] rescue nil
+      attributes = options.inject('') { |s, (k, v)| s << %{#{k.downcase}="#{v}" } }.strip
+      attributes << alt unless alt.nil?
+      url = image.thumbnail(size)
+      %{<img src="#{url}" #{attributes unless attributes.empty?} />} rescue nil
+    end
+    
+    
+    private
+      def image_and_options(tag)
+        options = tag.attr.dup
+        [find_image(tag, options), options]
+      end
+
+      def find_image(tag, options)
+        raise TagError, "'title' attribute required" unless title = options.delete('title') or id = options.delete('id') or tag.locals.image
+        tag.locals.image || Image.find_by_title(title) || Image.find(id)
+      end
+
+      def images_find_options(tag)
+        attr = tag.attr.symbolize_keys
+        by = attr[:by] || 'page_attachments.position'
+        order = attr[:order] || 'asc'
+
+        options = {
+          :order => "#{by} #{order}",
+          :limit => attr[:limit] || nil,
+          :offset => attr[:offset] || nil
+        }
+      end
+    
 
   end
 end
