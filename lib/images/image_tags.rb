@@ -55,12 +55,12 @@ module Images
       <pre><code><r:if_first>...</r:if_first></code></pre>
     }
     tag 'images:if_first' do |tag|
-        images = tag.locals.images
-        image = tag.locals.image
-        if image == images.first
-          tag.expand
-        end
+      images = tag.locals.images
+      image = tag.locals.image
+      if image == images.first
+        tag.expand
       end
+    end
       
     desc %{
       Renders the contained elements only if the current image is not the first.
@@ -69,12 +69,12 @@ module Images
       <pre><code><r:unless_first>...</r:unless_first></code></pre>
     }
     tag 'images:unless_first' do |tag|
-        images = tag.locals.images
-        image = tag.locals.image
-        if image != images.first
-          tag.expand
-        end
+      images = tag.locals.images
+      image = tag.locals.image
+      if image != images.first
+        tag.expand
       end
+    end
       
     desc %{
       Renders the contained elements only if the current contextual page has one or
@@ -85,10 +85,10 @@ module Images
       <pre><code><r:if_images [min_count="n"]>...</r:if_images></code></pre>
     }
     tag 'if_images' do |tag|
-        count = tag.attr['min_count'] && tag.attr['min_count'].to_i || 1
-        images = tag.locals.images.count
-        tag.expand if images >= count
-      end
+      count = tag.attr['min_count'] && tag.attr['min_count'].to_i || 1
+      images = tag.locals.images.count
+      tag.expand if images >= count
+    end
       
     desc %{
       Renders the contained elements only if the current contextual page does not
@@ -99,10 +99,10 @@ module Images
       <pre><code><r:if_images [min_count="n"]>...</r:if_images></code></pre>
     }
     tag 'unless_images' do |tag|
-        count = tag.attr['min_count'] && tag.attr['min_count'].to_i || 1
-        images = tag.locals.images.count
-        tag.expand unless images >= count
-      end
+      count = tag.attr['min_count'] && tag.attr['min_count'].to_i || 1
+      images = tag.locals.images.count
+      tag.expand unless images >= count
+    end
 
     desc %{
       Outputs the full URL of the image including the filename.
