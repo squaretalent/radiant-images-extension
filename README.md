@@ -1,6 +1,6 @@
 # Radiant Images
 
-IMAGE management tool, meant only to be useful to pages and extensions that need to require images.
+Radiant Images is an IMAGE management tool, meant only to be useful to pages and extensions that need to require images.
 
 ## Primary (only) Goals
 
@@ -25,3 +25,7 @@ IMAGE management tool, meant only to be useful to pages and extensions that need
 > paperclipped is freakin' awesome, we use it and we need to be able to migrate the images over
 
     rake radiant:extensions:images:migrate_from_paperclipped
+
+## License
+
+Radiant Images is licensed under the MIT standard license. See LICENSE for further information.

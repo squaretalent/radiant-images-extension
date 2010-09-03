@@ -31,7 +31,6 @@ describe Images::ImageTags do
       lambda { pages(:home).render(content) }.should raise_error
     end
     
-    
   end
   
   describe '<r:images:each>' do
@@ -96,9 +95,6 @@ describe Images::ImageTags do
       pages(:home).should render(content).as(expected)
     end
     
-    
   end
-  
-  
   
 end
