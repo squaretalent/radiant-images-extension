@@ -1,0 +1,7 @@
+- render_region :form_top do |form_top|
+  - form_top.asset_image do
+    - unless @image.new_record?
+      = image_tag @image.url(:preview)
+      - @image.asset.styles.each do |style, attrs|
+        - unless style.to_sym == :preview
+          = link_to style.to_s, @image.url(style.to_sym)

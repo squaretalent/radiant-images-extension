@@ -1,15 +1,19 @@
 - render_region :form do |form|
-  - form.asset do
-    %p.asset
-      - unless @image.new_record?
-        = image_tag @image.url(:preview)
-        - @image.asset.styles.each do |style, attrs|
-          - unless style.to_sym == :preview
-            = link_to style.to_s, @image.url(style.to_sym)
   - form.title do
     %p.title
       = fields.label :title
       = fields.text_field :title, :class => 'textbox'
+  - form.drawer do
+    .drawer
+      .drawer_contents#attributes
+        %table.fieldset
+          %tr
+            %th.label
+              = fields.label :caption
+            %td.field
+              = fields.text_field :caption, :class => 'textbox'
+      .drawer_handle
+        = link_to 'More', '#attributes', { :class => 'more toggle', :rel => 'toggle[attributes]' }
   - form.upload do
     %p.update
       = fields.label :asset

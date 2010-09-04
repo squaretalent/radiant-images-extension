@@ -5,6 +5,8 @@
     %h1 Edit Image
 
 - form_for :image, @image, :url => admin_image_path(@image), :html => {:method => :put, :multipart => true, :id => 'edit_image', 'data-onsubmit_status'=>"Saving Changes&#8230;"} do |fields|
+  #asset
+    = render :partial => 'fields_top', :locals => { :fields => fields }
   #fields
     = render :partial => 'fields', :locals => { :fields => fields }
 
