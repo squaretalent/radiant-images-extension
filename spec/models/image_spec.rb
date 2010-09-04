@@ -12,6 +12,10 @@ describe Image do
     @image.title.should == 'first'
   end
   
+  it 'should have a caption' do
+    @image.caption.should == 'brief description'
+  end
+  
   it 'should require a unique title' do
     @new_image = @image.clone
     @new_image.valid?
