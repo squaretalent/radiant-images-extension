@@ -90,8 +90,33 @@ describe Images::ImageTags do
   describe '<r:images:first>' do
     
     it 'should render the first image' do
-      content = '<r:images:first><r:images:url/></r:images:first>'
-      expected = @images.first.url
+      content   = '<r:images:first><r:images:url/></r:images:first>'
+      expected  = @images.first.url
+      pages(:home).should render(content).as(expected)
+    end
+    
+  end
+  
+  describe '<r:images:if_first>' do
+    
+    it 'should expand the tag if the image is the first' do
+      content   = '<r:images><r:each><r:if_first><r:url /></r:if_first></r:each></r:images>'
+      expected  = @images.first.url
+      pages(:home).should render(content).as(expected)
+    end
+    
+  end
+  
+  describe '<r:images:unless_first>' do
+    
+    it 'should expand the tag if the image is not the first' do
+      content   = '<r:images><r:each><r:unless_first><r:url /></r:unless_first></r:each></r:images>'
+      expected  = ''
+      
+      @images.each do |image|
+        expected += image.url unless image == @images.first
+      end
+      
       pages(:home).should render(content).as(expected)
     end
     
