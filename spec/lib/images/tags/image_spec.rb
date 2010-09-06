@@ -1,6 +1,6 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
+require File.dirname(__FILE__) + '/../../../spec_helper'
 
-describe Images::ImageTags do
+describe Images::Tags::Image do
   dataset :pages
   dataset :images
   

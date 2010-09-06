@@ -27,12 +27,12 @@ class ImagesExtension < Radiant::Extension
     end
 
     unless defined? admin.image
-      Radiant::AdminUI.send :include, Images::AdminUI
+      Radiant::AdminUI.send :include, Images::Interface::Admin::Images
       admin.image = Radiant::AdminUI.load_default_image_regions
     end
     
     
-    Page.send :include, Images::ImageTags
+    Page.send :include, Images::Tags::Image
 
     UserActionObserver.instance.send :add_observer!, Image 
     
