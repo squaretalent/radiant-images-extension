@@ -122,4 +122,115 @@ describe Images::ImageTags do
     
   end
   
+  describe '<r:if_images>' do
+    
+    it 'should expand the contents if there are images' do
+      content = '<r:images:if_images>test text</r:images:if_images>'
+      expected = 'test text'
+      pages(:home).should render(content).as(expected)
+    end
+    
+    it 'should not expand the contents if there are no images' do
+      Image.delete_all
+      content   = '<r:images:if_images>test text</r:images:if_images>'
+      expected  = ''
+      pages(:home).should render(content).as(expected)    
+    end
+    
+    it 'should expand if the min count is equal to the image count' do
+      min_count = Image.count
+      content   = '<r:images:if_images min_count="' + min_count.to_s + '">test text</r:images:if_images>'
+      expected  = 'test text'
+      pages(:home).should render(content).as(expected)      
+    end
+    
+    it 'should not expand if the min count is greater than the image count' do
+      min_count = Image.count + 1
+      content   = '<r:images:if_images min_count="' + min_count.to_s + '">test text</r:images:if_images>'
+      expected  = ''
+      pages(:home).should render(content).as(expected)    
+    end
+    
+  end
+  
+  describe '<r:unless_images>' do
+    
+    it 'should not the contents if there are images' do
+      content = '<r:images:unless_images>test text</r:images:unless_images>'
+      expected = ''
+      pages(:home).should render(content).as(expected)
+    end
+    
+    it 'should expand the contents if there are no images' do
+      Image.delete_all
+      content   = '<r:images:unless_images>test text</r:images:unless_images>'
+      expected  = 'test text'
+      pages(:home).should render(content).as(expected)    
+    end
+    
+    it 'should not expand if the min count is equal to the image count' do
+      min_count = Image.count
+      content   = '<r:images:unless_images min_count="' + min_count.to_s + '">test text</r:images:unless_images>'
+      expected  = ''
+      pages(:home).should render(content).as(expected)      
+    end
+    
+    it 'should expand if the min count is greater than the image count' do
+      min_count = Image.count + 1
+      content   = '<r:images:unless_images min_count="' + min_count.to_s + '">test text</r:images:unless_images>'
+      expected  = 'test text'
+      pages(:home).should render(content).as(expected)    
+    end
+    
+  end
+  
+  describe '<r:images:url/>' do
+    
+    it 'should output the url for a valid image' do
+      content   = '<r:images title="' + @images.first.title + '"><r:images:url/></r:images>'
+      expected  = @images.first.url 
+      pages(:home).should render(content).as(expected)    
+    end
+    
+  end
+  
+  describe '<r:images:title/>' do
+    
+    it 'should output the title for a valid image' do
+      content   = '<r:images title="' + @images.first.title + '"><r:images:title/></r:images>'
+      expected  = @images.first.title 
+      pages(:home).should render(content).as(expected)    
+    end
+    
+  end
+  
+  describe '<r:images:tag/>' do
+    
+    it 'should output a valid image tag when given a valid image' do
+      content   = '<r:images title="' + @images.first.title + '"><r:images:tag /></r:images>'
+      expected  = '<img src="' + @images.first.url + '"  alt="' + @images.first.title + '" />' 
+      pages(:home).should render(content).as(expected)    
+    end
+    
+    it 'should output a valid image tag when specifying an image by title' do
+      content   = '<r:images:tag title="' + @images.first.title + '" />'
+      expected  = '<img src="' + @images.first.url + '"  alt="' + @images.first.title + '" />' 
+      pages(:home).should render(content).as(expected)
+    end
+    
+    it 'should output an image tag with the specified size' do
+      content   = '<r:images:tag title="' + @images.first.title + '" size="icon" />'
+      expected  = '<img src="' + @images.first.url(:icon) + '"  alt="' + @images.first.title + '" />' 
+      pages(:home).should render(content).as(expected)
+    end
+    
+    it 'should use the given alt text specified' do
+      content   = '<r:images:tag title="' + @images.first.title + '" alt="new alt text" />'
+      expected  = '<img src="' + @images.first.url + '" alt="new alt text" />' 
+      pages(:home).should render(content).as(expected)
+    end
+    
+  end
+  
+  
 end

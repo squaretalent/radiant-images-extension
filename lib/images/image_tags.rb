@@ -87,7 +87,7 @@ module Images
     }
     tag 'if_images' do |tag|
       count = tag.attr['min_count'] && tag.attr['min_count'].to_i || 1
-      images = tag.locals.images.count
+      images = Image.count
       tag.expand if images >= count
     end
       
@@ -101,7 +101,7 @@ module Images
     }
     tag 'unless_images' do |tag|
       count = tag.attr['min_count'] && tag.attr['min_count'].to_i || 1
-      images = tag.locals.images.count
+      images = Image.count
       tag.expand unless images >= count
     end
 
@@ -114,22 +114,31 @@ module Images
       image, options = image_and_options(tag)
       image.url(style) rescue nil
     end
+    
+    desc %{
+      Outputs the title of the current image
+    }
+    tag 'images:title' do |tag|
+      image, option = image_and_options(tag)
+      image.title rescue nil
+    end
 
     desc %{
       Outputs the image tag for the current image. Use the size option to 
-      specify which size version of the image is to be used.
+      specify which size version of the image is to be used. Use alt to
+      specify alt text.
       
       *Usage:*
-      <pre><code><r:images:tag [title="image_title"] [size="icon|original"]></code></pre>
+      <pre><code><r:images:tag [title="image_title"] [size="icon|original"] [alt="alt_text"]></code></pre>
     }
     tag 'images:tag' do |tag|
       image, options = image_and_options(tag)
       size = options['size'] ? options.delete('size') : 'original'
-      alt = " alt='#{image.title}'" unless tag.attr['alt'] rescue nil
+      alt = " alt=\"#{image.title}\"" unless tag.attr['alt'] rescue nil
       attributes = options.inject('') { |s, (k, v)| s << %{#{k.downcase}="#{v}" } }.strip
       attributes << alt unless alt.nil?
       url = image.url size
-      %{<img src="#{url}" #{attributes unless attributes.empty?} />} rescue nil
+      %{<img src=\"#{url}\" #{attributes unless attributes.empty?} />} rescue nil
     end
     
     
