@@ -1,6 +1,8 @@
 # Uncomment this if you reference any of your controllers in activate
 # require_dependency 'application_controller'
 
+require 'paperclip'
+
 class ImagesExtension < Radiant::Extension
   version "0.1"
   description "Images stores images on s3"
@@ -14,16 +16,17 @@ class ImagesExtension < Radiant::Extension
     config.gem 'acts_as_list'
     config.gem 'will_paginate'
   end
+    
+  UserActionObserver.instance.send :add_observer!, Image
   
   def activate
+    
     unless defined? admin.image
       Radiant::AdminUI.send :include, Images::AdminUI
       admin.image = Radiant::AdminUI.load_default_image_regions
     end
     
     Page.send :include, Images::ImageTags, Images::PageExtensions
-
-    UserActionObserver.instance.send :add_observer!, Image 
     
     tab 'Content' do
       add_item 'Images', '/admin/images', :after => 'Pages'

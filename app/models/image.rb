@@ -10,7 +10,7 @@ class Image < ActiveRecord::Base
   validates_uniqueness_of :title
   validates_presence_of :asset_file_name
   
-  default_scope :order => 'position ASC'
+  default_scope :order => 'images.position ASC'
   acts_as_list
 
   has_attached_file :asset,
@@ -56,8 +56,6 @@ class Image < ActiveRecord::Base
     self.asset.url(*params)
   end
   
-private
-
   class << self
     def search(search = [], page = nil, pp = 2)
       unless search.blank?
