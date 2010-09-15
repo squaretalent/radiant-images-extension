@@ -9,10 +9,10 @@ class ImagesExtension < Radiant::Extension
   url "http://github.com/squaretalent/radiant-images-extension"
     
   extension_config do |config|
-    config.gem 'paperclip', :version => '2.3.1.1'
-    config.gem 'aws-s3', :version => '0.6.2', :lib => 'aws/s3'
-    config.gem 'acts_as_list', :version => '0.1.2'
-    config.gem 'rr', :version => '0.10.11'
+    config.gem 'paperclip',     :version => '2.3.1.1'
+    config.gem 'aws-s3',        :version => '0.6.2', :lib => 'aws/s3'
+    config.gem 'acts_as_list',  :version => '0.1.2'
+    config.gem 'rr',            :version => '0.10.11'
     config.gem 'acts_as_list'
     config.gem 'will_paginate'
   end
@@ -40,6 +40,12 @@ class ImagesExtension < Radiant::Extension
     Radiant::Config['s3.secret']      ||= 'set'
     Radiant::Config['s3.bucket']      ||= 'fs.domain.com'
     Radiant::Config['s3.path']        ||= ':class/:basename-:style.:extension'
+    
+    unless Radiant::Config["images.image_magick_path"].nil?
+      # Passenger needs this configuration to work with Image magick
+      # Radiant::Config["assets.image_magick_path"] = '/usr/local/bin/' # OS X Homebrew
+      Paperclip.options[:image_magick_path] = Radiant::Config["images.image_magick_path"]
+    end
     
   end
 end

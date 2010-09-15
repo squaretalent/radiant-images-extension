@@ -83,7 +83,7 @@ module Images
       tag.locals.image.asset.url(tag.locals.image_style.to_sym)
     end
     
-    [:title, :caption].each do |symbol|
+    [:title, :caption, :position].each do |symbol|
       desc %{ outputs the #{symbol} of the current image }
       tag "image:#{symbol}" do |tag|
         image = find_image(tag)
