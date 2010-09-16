@@ -113,7 +113,7 @@ module Images
       tag 'images:url' do |tag|
         style = tag.attr['style'] || :original
         image, options = image_and_options(tag)
-        image.url(style) rescue nil
+        image.asset.url(style, false) rescue nil
       end
     
       desc %{
@@ -138,7 +138,7 @@ module Images
         alt = " alt=\"#{image.title}\"" unless tag.attr['alt'] rescue nil
         attributes = options.inject('') { |s, (k, v)| s << %{#{k.downcase}="#{v}" } }.strip
         attributes << alt unless alt.nil?
-        url = image.url size
+        url = image.asset.url size
         %{<img src=\"#{url}\" #{attributes unless attributes.empty?} />} rescue nil
       end
     

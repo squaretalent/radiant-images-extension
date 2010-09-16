@@ -30,22 +30,31 @@ class Image < ActiveRecord::Base
     self.title = self.asset_file_name if title.blank?
   end
 
-  def basename
-    File.basename(asset_file_name, ".*") if asset_file_name
-  end
-
-  def extension
-    asset_file_name.split('.').last.downcase if asset_file_name
-  end
   
-  # returns the url of the asset
-  def url(style = :original, secure = false)
-    style  = style.to_s
-    prefix = secure ? 'https://' : 'http://'
-    domain = Radiant::Config['s3.host_alias'].empty? ? 's3.amazonaws.com' : Radiant::Config['s3.host_alias']
-    bucket = Radiant::Config['s3.host_alias'].empty? ? '/' + Radiant::Config['s3.bucket'] : ''
-    
-    url = prefix + domain + bucket + '/images/' + basename + '-' + style + '.' + extension
+  # We need to ovveried the url method for our attachment so 
+  # we can dynamically swap between aliased and non aliased domain names
+  module ::Paperclip
+    class Attachment
+      
+      def url(style = :original, include_updated_timestamp = true, secure = false)
+        style  = style.to_s
+        prefix = secure ? 'https://' : 'http://'
+        domain = Radiant::Config['s3.host_alias'].empty? ? 's3.amazonaws.com' : Radiant::Config['s3.host_alias']
+        bucket = Radiant::Config['s3.host_alias'].empty? ? '/' + Radiant::Config['s3.bucket'] : ''
+
+        url = prefix + domain + bucket + '/images/' + basename + '-' + style + '.' + extension
+        include_updated_timestamp && updated_at ? [url, updated_at].compact.join(url.include?("?") ? "&" : "?") : url
+      end
+      
+      def basename
+        File.basename(instance.asset_file_name, ".*") if instance.asset_file_name
+      end
+
+      def extension
+        instance.asset_file_name.split('.').last.downcase if instance.asset_file_name
+      end
+      
+    end
   end
   
 private

@@ -8,6 +8,10 @@ describe Images::Tags::Image do
     @images = Image.all
   end
   
+  before(:each) do
+    stub(AWS::S3::Base).establish_connection!
+  end
+  
   describe '<r:images>' do
     
     it 'should render without errors' do
