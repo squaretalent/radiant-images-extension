@@ -4,7 +4,7 @@
       - attributes.thumbnail do
         .image.attribute
           %a{ :href => edit_admin_image_path(image), :title => image.title }
-            %img.icon{ :src => image.url(:icon) }
+            %img.icon{ :src => image.asset.url(:icon) }
       - attributes.title do
         %span.title.attribute= link_to image.title, edit_admin_image_path(image)
       - attributes.modify do
