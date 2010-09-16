@@ -23,7 +23,7 @@ describe Images::Tags::Image do
     it 'should reference an image given its title' do
       image = @images[2]
       content = '<r:images title="' + image.title + '"><r:images:url /></r:images>'
-      pages(:home).should render(content).as(image.url)
+      pages(:home).should render(content).as(image.asset.url)
     end
     
     it 'should raise an exception if an image title is used that does not exist' do
@@ -45,21 +45,21 @@ describe Images::Tags::Image do
     it 'should be running through the image objects' do
       content = '<r:images:each><r:images:url/></r:images:each>'
       expected = ''
-      @images.each { |image| expected += image.url }
+      @images.each { |image| expected += image.asset.url }
       pages(:home).should render(content).as(expected)
     end
     
     it 'should only run through however many images we specify with limit' do
       content = '<r:images:each limit="2"><r:images:url/></r:images:each>'
       expected = ''
-      @images[0..1].each { |image| expected += image.url }
+      @images[0..1].each { |image| expected += image.asset.url }
       pages(:home).should render(content).as(expected)
     end
     
     it 'should start at the image number we give it using offset' do
       content = '<r:images:each limit="2" offset="1"><r:images:url/></r:images:each>'
       expected = ''
-      @images[1..2].each { |image| expected += image.url }
+      @images[1..2].each { |image| expected += image.asset.url }
       pages(:home).should render(content).as(expected)
     end
     
@@ -67,13 +67,13 @@ describe Images::Tags::Image do
       # asc
       content = '<r:images:each order="asc" by="position"><r:images:url/></r:images:each>'
       expected = ''
-      @images.each { |image| expected += image.url }
+      @images.each { |image| expected += image.asset.url }
       pages(:home).should render(content).as(expected)
       
       #desc
       content = '<r:images:each order="desc" by="position"><r:images:url/></r:images:each>'
       expected = ''
-      @images.reverse.each { |image| expected += image.url }
+      @images.reverse.each { |image| expected += image.asset.url }
       pages(:home).should render(content).as(expected)
     end
     
@@ -81,7 +81,7 @@ describe Images::Tags::Image do
       content = '<r:images:each order="asc" by="title"><r:images:url/></r:images:each>'
       expected = ''
       @images.sort! { |a,b| a.title <=> b.title }
-      @images.each { |image| expected += image.url }
+      @images.each { |image| expected += image.asset.url }
       pages(:home).should render(content).as(expected)
     end
         
@@ -91,7 +91,7 @@ describe Images::Tags::Image do
     
     it 'should render the first image' do
       content   = '<r:images:first><r:images:url/></r:images:first>'
-      expected  = @images.first.url
+      expected  = @images.first.asset.url
       pages(:home).should render(content).as(expected)
     end
     
@@ -101,7 +101,7 @@ describe Images::Tags::Image do
     
     it 'should expand the tag if the image is the first' do
       content   = '<r:images><r:each><r:if_first><r:url /></r:if_first></r:each></r:images>'
-      expected  = @images.first.url
+      expected  = @images.first.asset.url
       pages(:home).should render(content).as(expected)
     end
     
@@ -114,7 +114,7 @@ describe Images::Tags::Image do
       expected  = ''
       
       @images.each do |image|
-        expected += image.url unless image == @images.first
+        expected += image.asset.url unless image == @images.first
       end
       
       pages(:home).should render(content).as(expected)
@@ -188,7 +188,7 @@ describe Images::Tags::Image do
     
     it 'should output the url for a valid image' do
       content   = '<r:images title="' + @images.first.title + '"><r:images:url/></r:images>'
-      expected  = @images.first.url 
+      expected  = @images.first.asset.url 
       pages(:home).should render(content).as(expected)    
     end
     
@@ -208,25 +208,25 @@ describe Images::Tags::Image do
     
     it 'should output a valid image tag when given a valid image' do
       content   = '<r:images title="' + @images.first.title + '"><r:images:tag /></r:images>'
-      expected  = '<img src="' + @images.first.url + '"  alt="' + @images.first.title + '" />' 
+      expected  = '<img src="' + @images.first.asset.url + '"  alt="' + @images.first.title + '" />' 
       pages(:home).should render(content).as(expected)    
     end
     
     it 'should output a valid image tag when specifying an image by title' do
       content   = '<r:images:tag title="' + @images.first.title + '" />'
-      expected  = '<img src="' + @images.first.url + '"  alt="' + @images.first.title + '" />' 
+      expected  = '<img src="' + @images.first.asset.url + '"  alt="' + @images.first.title + '" />' 
       pages(:home).should render(content).as(expected)
     end
     
     it 'should output an image tag with the specified size' do
       content   = '<r:images:tag title="' + @images.first.title + '" size="icon" />'
-      expected  = '<img src="' + @images.first.url(:icon) + '"  alt="' + @images.first.title + '" />' 
+      expected  = '<img src="' + @images.first.asset.url(:icon) + '"  alt="' + @images.first.title + '" />' 
       pages(:home).should render(content).as(expected)
     end
     
     it 'should use the given alt text specified' do
       content   = '<r:images:tag title="' + @images.first.title + '" alt="new alt text" />'
-      expected  = '<img src="' + @images.first.url + '" alt="new alt text" />' 
+      expected  = '<img src="' + @images.first.asset.url + '" alt="new alt text" />' 
       pages(:home).should render(content).as(expected)
     end
     
