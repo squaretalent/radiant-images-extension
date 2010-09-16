@@ -49,5 +49,12 @@ class ImagesExtension < Radiant::Extension
     Radiant::Config['s3.bucket']      ||= "fs.domain.com"
     Radiant::Config['s3.path']        ||= ":class/:basename-:style.:extension"
     
+
+    unless Radiant::Config["images.image_magick_path"].nil?
+      # Passenger needs this configuration to work with Image magick
+      # Radiant::Config["assets.image_magick_path"] = '/usr/local/bin/' # OS X Homebrew
+      Paperclip.options[:image_magick_path] = Radiant::Config["images.image_magick_path"]
+    end
+    
   end
 end
