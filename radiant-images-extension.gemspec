@@ -9,23 +9,25 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["squaretalent"]
-  s.date = %q{2010-08-30}
+  s.date = %q{2010-09-16}
   s.description = %q{Image Radiant Extension management tool, meant only to be useful to pages and extensions that need to require images.}
   s.email = %q{info@squaretalent.com}
   s.extra_rdoc_files = [
-    "README.md"
+    "LICENSE",
+     "README.md"
   ]
   s.files = [
     ".gitignore",
+     "LICENSE",
      "README.md",
      "Rakefile",
      "VERSION",
      "app/controllers/admin/images_controller.rb",
-     "app/controllers/images_controller.rb",
      "app/models/image.rb",
      "app/views/admin/images/_bottom.haml",
      "app/views/admin/images/_fields.haml",
      "app/views/admin/images/_fields_bottom.haml",
+     "app/views/admin/images/_fields_top.haml",
      "app/views/admin/images/_image.haml",
      "app/views/admin/images/edit.haml",
      "app/views/admin/images/index.haml",
@@ -39,9 +41,8 @@ Gem::Specification.new do |s|
      "features/support/env.rb",
      "features/support/paths.rb",
      "images_extension.rb",
-     "lib/images/admin_ui.rb",
-     "lib/images/image_tags.rb",
-     "lib/images/page_extensions.rb",
+     "lib/images/interface/admin/images.rb",
+     "lib/images/tags/image.rb",
      "lib/tasks/images_extension_tasks.rake",
      "public/images/extensions/images/missing_icon.png",
      "public/images/extensions/images/missing_normal.png",
@@ -51,9 +52,8 @@ Gem::Specification.new do |s|
      "public/stylesheets/sass/admin/extensions/images/index.sass",
      "radiant-images-extension.gemspec",
      "spec/controllers/admin/images_controller_spec.rb",
-     "spec/controllers/images_controller_spec.rb",
      "spec/datasets/images.rb",
-     "spec/lib/image_tags_spec.rb",
+     "spec/lib/images/tags/image_spec.rb",
      "spec/models/image_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb"
@@ -65,9 +65,8 @@ Gem::Specification.new do |s|
   s.summary = %q{Images Extension for Radiant CMS}
   s.test_files = [
     "spec/controllers/admin/images_controller_spec.rb",
-     "spec/controllers/images_controller_spec.rb",
      "spec/datasets/images.rb",
-     "spec/lib/image_tags_spec.rb",
+     "spec/lib/images/tags/image_spec.rb",
      "spec/models/image_spec.rb",
      "spec/spec_helper.rb"
   ]
