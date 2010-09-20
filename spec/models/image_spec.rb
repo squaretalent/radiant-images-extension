@@ -13,7 +13,7 @@ describe Image do
   end
   
   it 'should have a caption' do
-    @image.caption.should == 'brief description'
+    @image.caption.should == "caption for #{@image.title.to_s}"
   end
   
   it 'should require a unique title' do

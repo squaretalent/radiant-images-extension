@@ -4,12 +4,6 @@ class Admin::ImagesController < Admin::ResourceController
   before_filter :edit_assets, :only => [ :show, :edit ]
   around_filter :rescue_exceptions, :only => [:create, :edit, :destroy]
   
-  # GET /admin/images
-  # GET /admin/images.js
-  # GET /admin/images.xml
-  # GET /admin/images.json                                        AJAX and HTML
-  #----------------------------------------------------------------------------
-  
   def index
     @images = Image.paginate :page => params[:page], :per_page => 20
   end

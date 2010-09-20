@@ -20,6 +20,7 @@ namespace :radiant do
           if asset.asset_type.name == :image
             Image.create({
               :title              => asset.title,
+              :caption            => asset.caption,
               :asset_file_name    => asset.asset_file_name,
               :asset_content_type => asset.asset_content_type,
               :asset_file_size    => asset.asset_file_size

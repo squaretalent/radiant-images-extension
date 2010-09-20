@@ -5,7 +5,7 @@ class ImagesDataset < Dataset::Base
     images.each_with_index do |image, i|
       create_record :image, image.to_sym,
         :title              => image.to_s,
-        :caption            => 'brief description',
+        :caption            => "caption for #{image.to_s}",
         :asset_file_name    => "#{image.to_s}.png",
         :asset_content_type => "image/png",
         :asset_file_size    => i+1*1000,

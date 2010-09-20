@@ -2,9 +2,9 @@
   = t('remove_image')
 
 %p
-  = t('text.remove_image.warning')
+  = t('remove_image_warning')
 
-- form_for [:admin, @image.becomes(Image)], :html => {:method => :delete, 'data-onsubmit_status'=>"Removing Image&#8230;"} do
+- form_for [:admin, @image.becomes(Image)], :html => {:method => :delete, 'data-onsubmit_status'=>"#{t('deleting_image')}&#8230;"} do
   
   %p.buttons
     %input.button{:type=>"submit", :value => t('delete_image') }/
