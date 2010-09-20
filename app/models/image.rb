@@ -29,6 +29,10 @@ class Image < ActiveRecord::Base
   def assign_title
     self.title = self.asset_file_name if title.blank?
   end
+  
+  def url(style = :original, include_updated_timestamp = true, secure = false)
+    self.asset.url(style, include_updated_timestamp, secure)
+  end
 
   
   # We need to ovveried the url method for our attachment so 
