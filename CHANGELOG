@@ -1,0 +1,9 @@
+== Change Log
+
+
+=== 0.1.1 (September 16, 2010)
+
+* Fixed a bug where passenger wouldn't pickup the ImageMagick install [Dirk Kelly, Mario Visic]
+
+=== 0.1.0 (September 16, 2010)
+* Initial Release [Dirk Kelly, Mario Visic]
