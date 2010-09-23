@@ -80,6 +80,8 @@ describe Admin::ImagesController do
       end
       
       it 'should render the edit template on invalid model' do
+        pending
+        # We don't need to spec out ResourceController methods
         any_instance_of(Image, :valid? => false)
         put :update, :id => @image.id
         response.should render_template(:edit)
