@@ -9,7 +9,7 @@ class Image < ActiveRecord::Base
   
   default_scope :order => 'position ASC'
   acts_as_list
-
+  
   has_attached_file :asset,
                     :styles           => lambda { Image.config_styles },
                     :whiny_thumbnails => false,
@@ -25,7 +25,7 @@ class Image < ActiveRecord::Base
                                         
   validates_attachment_presence :asset
   validates_attachment_content_type :asset, :content_type => ['image/jpeg', 'image/png', 'image/gif']
-
+  
   def assign_title
     self.title = self.asset_file_name if title.blank?
   end
@@ -33,9 +33,8 @@ class Image < ActiveRecord::Base
   def url(style = :original, include_updated_timestamp = true, secure = false)
     self.asset.url(style, include_updated_timestamp, secure)
   end
-
   
-  # We need to ovveried the url method for our attachment so 
+  # We need to overide the url method for our attachment so 
   # we can dynamically swap between aliased and non aliased domain names
   module ::Paperclip
     class Attachment
@@ -62,7 +61,7 @@ class Image < ActiveRecord::Base
   end
   
 private
-
+  
   class << self
     def search(search, page)
       unless search.blank?
@@ -70,7 +69,7 @@ private
         queries << 'LOWER(title) LIKE (:term)'
         queries << 'LOWER(caption) LIKE (:term)'
         queries << 'LOWER(asset_file_name) LIKE (:term)'
-
+        
         sql = queries.join(' OR ')
         @conditions = [sql, {:term => "%#{search.downcase}%" }]
       else
@@ -83,7 +82,7 @@ private
     
     def config_styles
       styles = []
-
+      
       if Radiant::Config['images.styles']
         styles = Radiant::Config['images.styles'].gsub(/\s+/,'').split(',') 
         styles = styles.collect{|s| s.split('=')}.inject({}) {|ha, (k, v)| ha[k.to_sym] = v; ha}

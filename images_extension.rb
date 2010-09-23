@@ -32,7 +32,7 @@ class ImagesExtension < Radiant::Extension
     end
     
     
-    Page.send :include, Images::Tags::Image
+    Page.send :include, Images::Tags::Core
 
     UserActionObserver.instance.send :add_observer!, Image 
     
