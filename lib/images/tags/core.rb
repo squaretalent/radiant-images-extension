@@ -121,7 +121,7 @@ module Images
           <pre><code><r:image title='image'><r:#{method} /></code></pre>
         }
         tag "image:#{method}" do |tag|
-          tag.locas.image.send(method)
+          tag.locals.image.send(method)
         end
       end
       
