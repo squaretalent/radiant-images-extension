@@ -58,7 +58,7 @@ module Images
         <pre><code><r:images:first>...</r:images:first></code></pre>
       }
       tag 'images:first' do |tag|
-        if first = Image.first
+        if first = tag.locals.images[0]
           tag.locals.image = first
           tag.expand
         end
