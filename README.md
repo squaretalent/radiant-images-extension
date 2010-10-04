@@ -26,6 +26,13 @@ Radiant Images is an IMAGE management tool, meant only to be useful to pages and
 
     rake radiant:extensions:images:migrate_from_paperclipped
 
+## Installation
+
+    gem install radiant-images-extension
+    # add the following line to your config/environment.rb: config.gem 'radiant-images-extension', :lib => false
+    rake radiant:extensions:images:update
+    rake radiant:extensions:images:migrate
+
 ## Host Alias Settings
 
 By default the images extension uses the following url for images:
