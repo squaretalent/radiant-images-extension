@@ -28,10 +28,14 @@ Radiant Images is an IMAGE management tool, meant only to be useful to pages and
 
 ## Installation
 
+The recommended way to install the radiant images extension is by installing the gem and configuring it in your radiant app, here are the instructions:
+
     gem install radiant-images-extension
     # add the following line to your config/environment.rb: config.gem 'radiant-images-extension', :lib => false
     rake radiant:extensions:images:update
     rake radiant:extensions:images:migrate
+
+If you want to run a development copy of images simply clone a copy into radiant's vendor/extensions folder and then run a update/migrate on the extension.
 
 ## Host Alias Settings
 
