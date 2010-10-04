@@ -2,7 +2,7 @@ class Admin::ImagesController < Admin::ResourceController
   
   before_filter :index_assets, :only => [ :index ]
   before_filter :edit_assets, :only => [ :show, :edit ]
-  around_filter :rescue_exceptions, :only => [:create, :edit, :destroy]
+  around_filter :rescue_s3_exceptions, :only => [:create, :edit, :destroy]
   
   def index
     @images = Image.paginate :page => params[:page], :per_page => 20
@@ -32,7 +32,7 @@ private
     include_stylesheet 'admin/extensions/images/edit'
   end
   
-  def rescue_exceptions
+  def rescue_s3_exceptions
     begin
       yield
     rescue AWS::S3::ResponseError => e
