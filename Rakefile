@@ -14,6 +14,7 @@ begin
     gem.add_development_dependency 'rr',    '>= 1.0.0'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
+    Jeweler::GemcutterTasks.new
 rescue LoadError
   puts "Jeweler (or a dependency) not available. This is only required if you plan to package images as a gem."
 end
