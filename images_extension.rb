@@ -1,6 +1,8 @@
 # Uncomment this if you reference any of your controllers in activate
 # require_dependency 'application_controller'
 
+require 'paperclip'
+
 class ImagesExtension < Radiant::Extension
   version "0.1"
   description "Images stores images on s3"
