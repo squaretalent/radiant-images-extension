@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{radiant-images-extension}
-  s.version = "0.2.0"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["squaretalent"]
-  s.date = %q{2010-09-24}
+  s.date = %q{2010-10-09}
   s.description = %q{Image Radiant Extension management tool, meant only to be useful to pages and extensions that need to require images.}
   s.email = %q{info@squaretalent.com}
   s.extra_rdoc_files = [
@@ -39,6 +39,7 @@ Gem::Specification.new do |s|
      "cucumber.yml",
      "db/migrate/20100601042237_create_images.rb",
      "db/migrate/20100602044124_add_position_to_images.rb",
+     "db/migrate/20100929150930_change_images_to_created_by_id.rb",
      "features/support/env.rb",
      "features/support/paths.rb",
      "images_extension.rb",
