@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{radiant-images-extension}
-  s.version = "0.1.1"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["squaretalent"]
@@ -43,7 +43,8 @@ Gem::Specification.new do |s|
      "features/support/paths.rb",
      "images_extension.rb",
      "lib/images/interface/admin/images.rb",
-     "lib/images/tags/image.rb",
+     "lib/images/tags/core.rb",
+     "lib/images/tags/helpers.rb",
      "lib/tasks/images_extension_tasks.rake",
      "public/images/admin/extensions/images/sort.png",
      "public/images/extensions/images/missing_icon.png",
@@ -55,7 +56,7 @@ Gem::Specification.new do |s|
      "radiant-images-extension.gemspec",
      "spec/controllers/admin/images_controller_spec.rb",
      "spec/datasets/images.rb",
-     "spec/lib/images/tags/image_spec.rb",
+     "spec/lib/images/tags/core_spec.rb",
      "spec/models/image_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb"
@@ -68,7 +69,7 @@ Gem::Specification.new do |s|
   s.test_files = [
     "spec/controllers/admin/images_controller_spec.rb",
      "spec/datasets/images.rb",
-     "spec/lib/images/tags/image_spec.rb",
+     "spec/lib/images/tags/core_spec.rb",
      "spec/models/image_spec.rb",
      "spec/spec_helper.rb"
   ]

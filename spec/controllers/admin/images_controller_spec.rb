@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../../spec_helper'
+require 'spec_helper'
 
 describe Admin::ImagesController do
   dataset :users
@@ -9,7 +9,6 @@ describe Admin::ImagesController do
     @images = Image.all
   end
    
-    
   context 'user not logged in' do
 
     it 'should redirect to login path' do
@@ -20,7 +19,6 @@ describe Admin::ImagesController do
   end
   
   context 'user logged in' do
-  
     before :each do
       login_as :admin
       stub(AWS::S3::Base).establish_connection!
@@ -37,99 +35,35 @@ describe Admin::ImagesController do
         get :index
         assigns(:images).should == @images
       end
+      
+      it 'should use pagination' do
+        get :index
+        assigns(:images).class.should == WillPaginate::Collection
+      end
     
-    end
+    end  
     
-    context 'show action' do
+    context 'search action' do
       
-      it 'should redirect to the edit action' do
-        get :show, :id => @image.id
-        response.should redirect_to edit_admin_image_url(@image)
+      before :each do
+        login_as :admin
+        stub(AWS::S3::Base).establish_connection!
       end
       
+      it 'should render the search template on search action' do
+        get :search
+        response.should render_template(:search)
+      end
+      
+      it 'should return valid search results'
+      
+      it 'should respond to JS requests correctly'
+      
+      it 'should respond to xml requests correctly'
+      
+      it 'should respond to json requests correctly'
+            
     end
-    
-    context 'edit action' do
-      
-      it 'should render the edit template' do
-        get :edit, :id => @image.id
-        response.should render_template(:edit)
-      end
-      
-      it 'should redirect to the index on invalid image id' do
-        get :edit, :id => 999999
-        response.should redirect_to admin_images_url
-      end
-      
-    end
-    
-    context 'new action' do
-      
-      it 'should render the new template' do
-        get :new
-        response.should render_template(:new)
-      end
-      
-    end
-    
-    context 'update action' do
-      
-      it 'should redirect to the index on valid image' do
-        put :update, :id => @image.id
-        response.should redirect_to admin_images_url
-      end
-      
-      it 'should render the edit template on invalid model' do
-        pending
-        # We don't need to spec out ResourceController methods
-        any_instance_of(Image, :valid? => false)
-        put :update, :id => @image.id
-        response.should render_template(:edit)
-      end
-      
-    end
-    
-    context 'create action' do
-      
-      it "create action should render new template when model is invalid" do
-        stub.instance_of(Image).valid? {false}
-        post :create
-        response.should render_template(:new)
-      end
-
-      it "create action should redirect when model is valid" do
-        stub.instance_of(Image).valid? {true}
-        post :create
-        response.should redirect_to admin_images_url
-      end
-      
-      
-    end
-    
-    context 'remove action' do
-      
-      it 'should render the remove template' do
-        get :remove, :id => @image.id
-        response.should render_template(:remove)
-        
-      end
-      
-    end
-    
-    context 'destroy action' do
-      
-      it 'should redirect to the index' do
-        # we need to stop destroy_attached_files running (as it'll error with no S3 details)
-        mock(@images[1]).destroy_attached_files
-        
-        @images[1].destroy
-        delete :destroy, :id => @images[1].id
-        response.should redirect_to admin_images_url
-        Image.exists?(@images[1].id).should be_false
-      end
-      
-    end
-  
     
   end
     
