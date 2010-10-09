@@ -52,19 +52,6 @@ module Images
       end
       
       desc %{
-        Renders the first image.
-        
-        *Usage:* 
-        <pre><code><r:images:first>...</r:images:first></code></pre>
-      }
-      tag 'images:first' do |tag|
-        if first = tag.locals.images[0]
-          tag.locals.image = first
-          tag.expand
-        end
-      end
-      
-      desc %{
         Expands the current image context
         
         *Usage:*
@@ -76,30 +63,6 @@ module Images
         tag.expand if tag.locals.image.present?
       end
       
-      desc %{
-        Renders the contained elements only if the current image is the first.
-        
-        *Usage:*
-        <pre><code><r:image:if_first>...</r:image:if_first></code></pre>
-      }
-      tag 'image:if_first' do |tag|
-        if tag.locals.image == tag.locals.images.first
-          tag.expand
-        end
-      end
-      
-      desc %{
-        Renders the contained elements only if the current image is not the first.
-        
-        *Usage:*
-        <pre><code><r:image:unless_first>...</r:image:unless_first></code></pre>
-      }
-      tag 'image:unless_first' do |tag|
-        unless tag.locals.image == tag.locals.images.first
-          tag.expand
-        end
-      end
-
       desc %{
         Outputs the full URL of the image including the filename. Specify the style
         using the style option.

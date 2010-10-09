@@ -29,6 +29,12 @@ module Images
             result = Image.find(tag.attr['id'])
           elsif tag.attr['title']
             result = Image.find_by_title(tag.attr['title'])
+          elsif tag.attr['position']
+            begin
+              result = tag.locals.images[(tag.attr['position']-1).to_i]
+            rescue
+              result = Image.find_by_position(tag.attr['position'].to_i)
+            end
           end
           
           result
