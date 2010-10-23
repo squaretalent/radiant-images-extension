@@ -60,7 +60,7 @@ module Images
       tag 'image' do |tag|
         tag.locals.image = Helpers.current_image(tag)
         
-        tag.expand if tag.locals.image.present?
+        tag.expand
       end
       
       desc %{
@@ -71,20 +71,45 @@ module Images
         <pre><code><r:image title='image'><r:url [style="preview|original"] /></r:image></code></pre>
       }
       tag 'image:url' do |tag|
-        style = tag.attr['style'] || :original
+        result = nil
         
-        tag.locals.image.url(style, false)
+        if tag.locals.image ||= Helpers.current_image(tag)
+          style = tag.attr['style'] || :original
+          result = tag.locals.image.url(style, false)
+        end
+        
+        result
+      end
+      
+      desc %{
+        Outputs a very simple image tag
+      }
+      tag 'image:tag' do |tag|
+        result = nil
+
+        if tag.locals.image ||= Helpers.current_image(tag)
+          style = tag.attr['style'] || :original
+          result = %{<img src="#{tag.locals.image.url(style, false)}" />}
+        end
+        
+        result
       end
       
       [:id, :title].each do |method|
         desc %{
           Outputs the title of the current image
-        
+          
           *Usage:*
           <pre><code><r:image title='image'><r:#{method} /></code></pre>
         }
         tag "image:#{method}" do |tag|
-          tag.locals.image.send(method)
+          result = nil
+          
+          if tag.locals.image ||= Helpers.current_image(tag)
+            result = tag.locals.image.send(method)
+          end
+          
+          result
         end
       end
       

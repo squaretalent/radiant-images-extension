@@ -43,7 +43,7 @@ class Image < ActiveRecord::Base
         style  = style.to_s
         prefix = secure ? 'https://' : 'http://'
         domain = Radiant::Config['s3.host_alias'].present? ? Radiant::Config['s3.host_alias'] : 's3.amazonaws.com'
-        bucket = Radiant::Config['s3.host_alias'].present? ? '/' + Radiant::Config['s3.bucket'] : ''
+        bucket = Radiant::Config['s3.host_alias'].present? ? '' : "/#{Radiant::Config['s3.bucket']}"
 
         url = prefix + domain + bucket + '/images/' + basename + '-' + style + '.' + extension
         include_updated_timestamp && updated_at ? [url, updated_at].compact.join(url.include?("?") ? "&" : "?") : url
