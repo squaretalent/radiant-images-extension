@@ -2,6 +2,7 @@
 # require_dependency 'application_controller'
 
 require 'paperclip'
+require 'aws/s3'
 
 class ImagesExtension < Radiant::Extension
   version "0.1"
@@ -27,7 +28,7 @@ class ImagesExtension < Radiant::Extension
       warn 'Either install the Settings extension or remove Images.'
       exit(1)
     end
-
+    
     unless defined? admin.image
       Radiant::AdminUI.send :include, Images::Interface::Admin::Images
       admin.image = Radiant::AdminUI.load_default_image_regions
