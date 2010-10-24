@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{radiant-images-extension}
-  s.version = "0.3.2"
+  s.version = "0.3.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["squaretalent"]
-  s.date = %q{2010-10-09}
+  s.date = %q{2010-10-23}
   s.description = %q{Image Radiant Extension management tool, meant only to be useful to pages and extensions that need to require images.}
   s.email = %q{info@squaretalent.com}
   s.extra_rdoc_files = [

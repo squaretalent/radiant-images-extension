@@ -9,10 +9,7 @@ describe Images::Tags::Core do
       'images:if_images',
       'images:unless_images',
       'images:each',
-      'images:first',
       'image',
-      'image:if_first',
-      'image:unless_first',
       'image:url',
       'image:id',
       'image:title'].sort
