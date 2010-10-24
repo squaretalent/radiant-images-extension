@@ -16,10 +16,6 @@ Radiant Images is an IMAGE management tool, meant only to be useful to pages and
 
 > Images is a base for things like galleries and shop, where they don't need additional assets
 
-### Strictly aws and paperclip
-
-> We don't work with images locally because we use Heroku. So we're not going to give you the option to start locally
-
 ### Migrate from paperclipped easily
 
 > paperclipped is freakin' awesome, we use it and we need to be able to migrate the images over
@@ -41,13 +37,19 @@ If you want to run a development copy of images simply clone a copy into radiant
 
 Dirk Kelly, Mario Visic
 
+## S3 Storage
+
+By default images will use your local file storage. If you wish to use s3 to store your image, change the `images.storage` config key to 's3'. Leave it set as `local` to use your local file system.
+
+    Radiant::Config['images.storage'] = `s3`
+
 ## Host Alias Settings
 
-By default the images extension uses the following url for images:
+If you've setup images to use S3, by default the following url will be used for images:
 
     http://s3.amazonaws.com/bucketname/images/name_of_image-style.(png|jpg|gif)
 
-There is a radiant configuration option called s3.host_alias. By default it is blank, if you give it a value, the images extension will use the FQDN method to access your images. Setting your host alias to domain.name.com for example would produce a URL like this:
+There is a radiant configuration option called s3.host_alias. By default it is blank, if you give it a value, the images extension will use the FQDN method to access your images. Setting your host alias to `domain.name.com` for example would produce a URL like this:
 
     http://domain.name.com/images/name_of_image-style.(png|jpg|gif) 
 
