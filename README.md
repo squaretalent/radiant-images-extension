@@ -49,7 +49,7 @@ If you've setup images to use S3, by default the following url will be used for 
 
     http://s3.amazonaws.com/bucketname/images/name_of_image-style.(png|jpg|gif)
 
-There is a radiant configuration option called s3.host_alias. By default it is blank, if you give it a value, the images extension will use the FQDN method to access your images. Setting your host alias to `domain.name.com` for example would produce a URL like this:
+There is a radiant configuration option called `s3.host_alias`. By default it is blank, if you give it a value, the images extension will use the FQDN method to access your images. Setting your host alias to `domain.name.com` for example would produce a URL like this:
 
     http://domain.name.com/images/name_of_image-style.(png|jpg|gif) 
 
