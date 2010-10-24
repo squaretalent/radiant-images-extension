@@ -39,9 +39,9 @@ Dirk Kelly, Mario Visic
 
 ## S3 Storage
 
-By default images will use your local file storage. If you wish to use s3 to store your image, change the `images.storage` config key to 's3'. Leave it set as `local` to use your local file system.
+By default images will use your local file storage. If you wish to use s3 to store your image, change the `images.storage` config key to `s3`. Leave it set as `local` to use your local file system.
 
-    Radiant::Config['images.storage'] = `s3`
+    Radiant::Config['images.storage'] = 's3'
 
 ## Host Alias Settings
 
