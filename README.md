@@ -37,6 +37,10 @@ The recommended way to install the radiant images extension is by installing the
 
 If you want to run a development copy of images simply clone a copy into radiant's vendor/extensions folder and then run a update/migrate on the extension.
 
+## Contributors
+
+Dirk Kelly, Mario Visic
+
 ## Host Alias Settings
 
 By default the images extension uses the following url for images:
