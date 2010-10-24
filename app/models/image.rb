@@ -19,9 +19,12 @@ class Image < ActiveRecord::Base
                       :access_key_id      => Radiant::Config['s3.key'],
                       :secret_access_key  => Radiant::Config['s3.secret']
                     },
+                    :s3_host_alias    => Radiant::Config['s3.host_alias'],
                     :bucket           => Radiant::Config['s3.bucket'],
+                    :url              => Radiant::Config['s3.host_alias'].blank? ? :s3_path_url : :s3_alias_url,
                     :path             => Radiant::Config['images.storage'] == 's3' ? Radiant::Config['images.path'] : "#{RAILS_ROOT}/public/#{Radiant::Config['images.path']}"
-                                        
+                    #:path             => Radiant::Config['images.path']
+                                 
   validates_attachment_presence :asset
   validates_attachment_content_type :asset, :content_type => ['image/jpeg', 'image/png', 'image/gif']
   
@@ -29,40 +32,8 @@ class Image < ActiveRecord::Base
     self.title = self.asset_file_name if title.blank?
   end
   
-  def url(style = :original, include_updated_timestamp = true, secure = false)
-    self.asset.url(style, include_updated_timestamp, secure)
-  end
-  
-  # We need to overide the url method for our attachment so 
-  # we can dynamically swap between aliased and non aliased domain names
-  module ::Paperclip
-    class Attachment
-      
-      def url(style = :original, include_updated_timestamp = true, secure = false)
-        style  = style.to_s
-        prefix = ''
-        domain = ''
-        bucket = ''
-        
-        if Radiant::Config['images.storage'] == 's3'
-          prefix = secure ? 'https://' : 'http://'
-          domain = Radiant::Config['s3.host_alias'].present? ? Radiant::Config['s3.host_alias'] : 's3.amazonaws.com'
-          bucket = Radiant::Config['s3.host_alias'].present? ? '' : "/#{Radiant::Config['s3.bucket']}"
-        end
-        
-        url = prefix + domain + bucket + '/images/' + basename + '-' + style + '.' + extension
-        include_updated_timestamp && updated_at ? [url, updated_at].compact.join(url.include?("?") ? "&" : "?") : url
-      end
-      
-      def basename
-        File.basename(instance.asset_file_name, ".*") if instance.asset_file_name
-      end
-
-      def extension
-        instance.asset_file_name.split('.').last.downcase if instance.asset_file_name
-      end
-      
-    end
+  def url(style = nil, include_updated_timestamp = true)
+    self.asset.url(style, include_updated_timestamp)
   end
   
 private

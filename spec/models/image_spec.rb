@@ -3,26 +3,35 @@ require 'spec_helper'
 describe Image do
   dataset :images
   
-  before(:each) do
+  before :each  do
     stub(AWS::S3::Base).establish_connection!
     @image = images(:first)
   end
   
-  it 'should have a title' do
-    @image.title.should == 'first'
+  context 'fields' do
+  
+    it 'should have a title' do
+      @image.title.should == 'first'
+    end
+  
+    it 'should have a caption' do
+      @image.caption.should == "caption for #{@image.title.to_s}"
+    end
+    
   end
   
-  it 'should have a caption' do
-    @image.caption.should == "caption for #{@image.title.to_s}"
-  end
+  context 'validations' do
   
-  it 'should require a unique title' do
-    @new_image = @image.clone
-    @new_image.valid?
-    @new_image.errors.on(:title).should include 'name is already in use'
+    it 'should require a unique title' do
+      @new_image = @image.clone
+      @new_image.valid?
+      @new_image.errors.on(:title).should include 'name is already in use'
+    end
+    
   end
   
   context 's3 assets' do
+    
     it 'should have an asset' do
       @image.asset.class.should == Paperclip::Attachment
     end
@@ -58,8 +67,6 @@ describe Image do
       @image.errors.on(:asset).should include 'not one of the allowed file types'
     end
     
-
   end
-
-  
+    
 end
