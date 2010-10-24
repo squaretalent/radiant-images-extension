@@ -14,14 +14,13 @@ class Image < ActiveRecord::Base
                     :styles           => lambda { Image.config_styles },
                     :whiny_thumbnails => false,
                     :default_url      => '/images/extensions/images/missing_:style.png',
-                    
-                    :storage          => :s3,
+                    :storage          => Radiant::Config['images.storage'] == 's3' ? :s3 : :filesystem, 
                     :s3_credentials   => {
                       :access_key_id      => Radiant::Config['s3.key'],
                       :secret_access_key  => Radiant::Config['s3.secret']
                     },
                     :bucket           => Radiant::Config['s3.bucket'],
-                    :path             => Radiant::Config['s3.path']
+                    :path             => Radiant::Config['images.storage'] == 's3' ? Radiant::Config['images.path'] : "#{RAILS_ROOT}/public/#{Radiant::Config['images.path']}"
                                         
   validates_attachment_presence :asset
   validates_attachment_content_type :asset, :content_type => ['image/jpeg', 'image/png', 'image/gif']
@@ -41,10 +40,16 @@ class Image < ActiveRecord::Base
       
       def url(style = :original, include_updated_timestamp = true, secure = false)
         style  = style.to_s
-        prefix = secure ? 'https://' : 'http://'
-        domain = Radiant::Config['s3.host_alias'].present? ? Radiant::Config['s3.host_alias'] : 's3.amazonaws.com'
-        bucket = Radiant::Config['s3.host_alias'].present? ? '' : "/#{Radiant::Config['s3.bucket']}"
-
+        prefix = ''
+        domain = ''
+        bucket = ''
+        
+        if Radiant::Config['images.storage'] == 's3'
+          prefix = secure ? 'https://' : 'http://'
+          domain = Radiant::Config['s3.host_alias'].present? ? Radiant::Config['s3.host_alias'] : 's3.amazonaws.com'
+          bucket = Radiant::Config['s3.host_alias'].present? ? '' : "/#{Radiant::Config['s3.bucket']}"
+        end
+        
         url = prefix + domain + bucket + '/images/' + basename + '-' + style + '.' + extension
         include_updated_timestamp && updated_at ? [url, updated_at].compact.join(url.include?("?") ? "&" : "?") : url
       end
