@@ -44,12 +44,13 @@ class ImagesExtension < Radiant::Extension
     end
     
     Radiant::Config['images.default'] ||= "original"
-    Radiant::Config['images.path']    ||= ":class/:basename-:style.:extension"
+    Radiant::Config['images.url']     ||= "/images/:basename-:style.:extension"
+    Radiant::Config['images.path']    ||= ":rails_root/public/images/:basename-:style.:extension"
     Radiant::Config['images.storage'] ||= "local"
     Radiant::Config['images.styles']  ||= "icon=45x45#,preview=200x200#,normal=640x640#"
     
-    Radiant::Config['s3.bucket']      ||= "fs.domain.com"
-    Radiant::Config['s3.host_alias']  ||= ""
+    Radiant::Config['s3.bucket']      ||= "set"
+    Radiant::Config['s3.host_alias']  ||= "set"
     Radiant::Config['s3.key']         ||= "set"
     Radiant::Config['s3.secret']      ||= "set"
     

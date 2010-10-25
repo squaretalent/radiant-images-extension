@@ -68,36 +68,5 @@ describe Image do
     end
     
   end
-  
-  context 'uploading images' do
-    
-    context 'using local storage' do
-      
-      before :each do
-        stub(Radiant::Config).[]('images.default') { 'original' }
-        stub(Radiant::Config).[]('images.path')    {  ":class/:basename-:style.:extension" }
-        stub(Radiant::Config).[]('images.styles')  { 'icon=45x45#,preview=200x200#,normal=640x640#' }
-        stub(Radiant::Config).[]('images.storage') { 'local' }
-        @image = Image.new(:title => 'Test Image')
-        @image.asset = File.open("#{RAILS_ROOT}/vendor/extensions/images/spec/datasets/squaretalent.png", "r")
-
-      end
-      
-      it 'it should give a valid url using the default style' do
-        @image.save
-        @image.asset.url.should == '/images/squaretalent-original.png'
-      end
-      
-    end
-    
-    context 'using s3 storage' do
-      
-      before :each do
-        stub(Radiant::Config).[]('images.storage') { 's3' }
-      end
-      
-    end
-    
-  end
     
 end
