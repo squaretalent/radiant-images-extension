@@ -4,25 +4,15 @@ Radiant Images is an IMAGE management tool, meant only to be useful to pages and
 
 ## Primary (only) Goals
 
-### Light Weight
+**Light Weight ::** We're not replacing paperclipped, we're just building a simple image manager extension.
 
-> We're not replacing paperclipped, we're just building a simple image manager extension.
+**Uncomplicated ::** People need to be able to look at the model and instantly know what it's doing, being able to do so means they can easily extend it
 
-### Uncomplicated
+**Flexible ::** Images works with the local filesystem or S3 cloud storage.
 
-> People need to be able to look at the model and instantly know what it's doing, being able to do so means they can easily extend it
+**Easily Extendable ::** Images is a base for things like galleries and shop, where they don't need additional assets
 
-### Flexible
-
-> Images works with the local filesystem or S3 cloud storage.
-
-### Easily Extendable
-
-> Images is a base for things like galleries and shop, where they don't need additional assets
-
-### Migrate from paperclipped easily
-
-> paperclipped is freakin' awesome, we use it and we need to be able to migrate the images over
+**Migrate from paperclipped easily ::** Paperclipped is freakin' awesome, we use it and we need to be able to migrate the images over
 
     rake radiant:extensions:images:migrate_from_paperclipped
 
@@ -42,6 +32,13 @@ By default images will use your local file storage. If you wish to use s3 to sto
 
     Radiant::Config['images.storage'] = 's3'
 
+You will also need to set the related S3 config items to match your account:
+
+    Radiant::Config['s3.bucket']      = 'bucket'
+    Radiant::Config['s3.host_alias']  = 'alias' # Optional! Used for aliased hostnames
+    Radiant::Config['s3.key']         = 'key'
+    Radiant::Config['s3.secret']      = 'secret'
+
 The URL and path values will need to be altered from their default values to work correctly with S3 storage, see the section below for examples.
 
 ## URL and Path Settings
@@ -56,22 +53,22 @@ Here are some base values and their explanation of use:
 
 produces a URL such as: /images/original_file-icon.png
 
-    images.path = :rails_root/public/:class/:basename-:style.:extension
-    images.url  = /:class/:basename-:style.:extension
+    Radiant::Config['images.path'] = ':rails_root/public/:class/:basename-:style.:extension'
+    Radiant::Config['images.url']  = '/:class/:basename-:style.:extension'
 
 #### Amazon S3 storage
 
 produces a URL such as: http://s3.amazonaws.com/bucketname/images/original_file-icon.png
 
-    images.path = :class/:basename-:style.:extension
-    images.url  = :s3_path_url
+    Radiant::Config['images.path'] = ':class/:basename-:style.:extension'
+    Radiant::Config['images.url']  = ':s3_path_url'
 
 #### Amazon S3 with FQDN (Requires a CNAME pointing to s3.amazonaws.com)
 
-produces a URL such as: http://bucket.name/images/original_file-icon.png
+produces a URL such as: http://host.alias/images/original_file-icon.png
 
-    images.path = :class/:basename-:style.:extension
-    images.url  = :s3_alias_url
+    Radiant::Config['images.path'] = ':class/:basename-:style.:extension'
+    Radiant::Config['images.url']  = ':s3_alias_url'
 
 ## Passenger and ImageMagick
 
