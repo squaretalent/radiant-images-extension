@@ -21,9 +21,8 @@ class Image < ActiveRecord::Base
                     },
                     :s3_host_alias    => Radiant::Config['s3.host_alias'],
                     :bucket           => Radiant::Config['s3.bucket'],
-                    :url              => Radiant::Config['s3.host_alias'].blank? ? :s3_path_url : :s3_alias_url,
+                    :url              => Radiant::Config['images.storage'] == 's3' ? Radiant::Config['images.path'] : "/#{Radiant::Config['images.path']}",
                     :path             => Radiant::Config['images.storage'] == 's3' ? Radiant::Config['images.path'] : "#{RAILS_ROOT}/public/#{Radiant::Config['images.path']}"
-                    #:path             => Radiant::Config['images.path']
                                  
   validates_attachment_presence :asset
   validates_attachment_content_type :asset, :content_type => ['image/jpeg', 'image/png', 'image/gif']
