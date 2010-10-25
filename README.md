@@ -79,6 +79,16 @@ produces a URL such as: http://bucket.name/images/original_file-icon.png
 
     images.path = :class/:basename-:style.:extension
     images.url  = :s3_alias_url
+  
+#### Passenger and ImageMagick
+
+They don't always play nicely, if you're having strange errors such as
+
+    /tmp/stream20101025-12485-nx6sdr-0 is not recognized by the 'identify' command.
+     
+Then ensure that you have set the config to match the location of imagemagick on your machine
+
+    images.image_magick_path = /usr/local/bin
 
 ## License
 
