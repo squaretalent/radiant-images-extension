@@ -28,34 +28,27 @@ Radiant Images is an IMAGE management tool, meant only to be useful to pages and
 
 ## Installation
 
-The recommended way to install the radiant images extension is by installing the gem and configuring it in your radiant app, here are the instructions:
-
     gem install radiant-images-extension
-    # add the following line to your config/environment.rb: config.gem 'radiant-images-extension', :lib => false
+    
+Add the following line to your config/environment.rb: 
+`config.gem 'radiant-images-extension', :lib => false`
+    
     rake radiant:extensions:images:update
     rake radiant:extensions:images:migrate
 
-If you want to run a development copy of images simply clone a copy into radiant's vendor/extensions folder and then run a update/migrate on the extension.
-
-## Contributors
-
-Dirk Kelly, Mario Visic
-
 ## S3 Storage
 
-By default images will use your local file storage. If you wish to use s3 to store your image, change the `images.storage` config key to `s3`. Leave it set as `local` to use your local file system.
+By default images will use your local file storage. If you wish to use s3 to store your image, change the `images.storage` config key to `s3`.
 
     Radiant::Config['images.storage'] = 's3'
 
-The URL and path values will need to be altered from their default values to work correctly with S3 storage, see the section below for further information.
+The URL and path values will need to be altered from their default values to work correctly with S3 storage, see the section below for examples.
 
 ## URL and Path Settings
 
-The URL and Path settings for images out of the box will work fine for local storage. If you want to customize the location of your stored files or the URL that is given to the user you will need to modify these settings.
+The URL and Path settings for images out of the box will work fine for local storage, if you are using S3 then checkout the examples below:
 
-These two fields contain symbols that will be interpolated into their actual values, for example :basename will be converted to the base file name (without the extension) of your uploaded image. 
-
-You can find a list of symbols at http://github.com/thoughtbot/paperclip/wiki/interpolations. There are more symbols which you may be able to find by searching online also.
+You can find a list of symbols that can be used in the URL/Path [at the paperclip wiki](http://github.com/thoughtbot/paperclip/wiki/interpolations). There are more symbols which you may be able to find by searching online also.
 
 Here are some base values and their explanation of use:
 
@@ -79,8 +72,8 @@ produces a URL such as: http://bucket.name/images/original_file-icon.png
 
     images.path = :class/:basename-:style.:extension
     images.url  = :s3_alias_url
-  
-#### Passenger and ImageMagick
+
+## Passenger and ImageMagick
 
 They don't always play nicely, if you're having strange errors such as
 
@@ -89,6 +82,10 @@ They don't always play nicely, if you're having strange errors such as
 Then ensure that you have set the config to match the location of imagemagick on your machine
 
     images.image_magick_path = /usr/local/bin
+
+## Contributors
+
+Dirk Kelly, Mario Visic
 
 ## License
 
