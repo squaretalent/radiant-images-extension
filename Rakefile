@@ -7,6 +7,7 @@ begin
     gem.email = "info@squaretalent.com"
     gem.homepage = "http://github.com/squaretalent/radiant-images-extension"
     gem.authors = ['squaretalent']
+    gem.add_dependency 'radiant',           '>= 0.9.1'
     gem.add_dependency 'paperclip',         '~> 2.3.1.1'
     gem.add_dependency 'aws-s3',            '>= 0.6.2'
     gem.add_dependency 'acts_as_list',      '>= 0.1.2'
