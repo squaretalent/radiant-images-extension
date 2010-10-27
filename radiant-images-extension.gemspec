@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["squaretalent"]
-  s.date = %q{2010-10-23}
+  s.date = %q{2010-10-27}
   s.description = %q{Image Radiant Extension management tool, meant only to be useful to pages and extensions that need to require images.}
   s.email = %q{info@squaretalent.com}
   s.extra_rdoc_files = [
@@ -18,7 +18,6 @@ Gem::Specification.new do |s|
   ]
   s.files = [
     ".gitignore",
-     "CHANGELOG",
      "LICENSE",
      "README.md",
      "Rakefile",
@@ -57,6 +56,7 @@ Gem::Specification.new do |s|
      "radiant-images-extension.gemspec",
      "spec/controllers/admin/images_controller_spec.rb",
      "spec/datasets/images.rb",
+     "spec/datasets/squaretalent.png",
      "spec/lib/images/tags/core_spec.rb",
      "spec/models/image_spec.rb",
      "spec/spec.opts",
@@ -80,12 +80,14 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<radiant>, [">= 0.9.1"])
       s.add_runtime_dependency(%q<paperclip>, ["~> 2.3.1.1"])
       s.add_runtime_dependency(%q<aws-s3>, [">= 0.6.2"])
       s.add_runtime_dependency(%q<acts_as_list>, [">= 0.1.2"])
       s.add_development_dependency(%q<rspec>, [">= 1.3.0"])
       s.add_development_dependency(%q<rr>, [">= 1.0.0"])
     else
+      s.add_dependency(%q<radiant>, [">= 0.9.1"])
       s.add_dependency(%q<paperclip>, ["~> 2.3.1.1"])
       s.add_dependency(%q<aws-s3>, [">= 0.6.2"])
       s.add_dependency(%q<acts_as_list>, [">= 0.1.2"])
@@ -93,6 +95,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rr>, [">= 1.0.0"])
     end
   else
+    s.add_dependency(%q<radiant>, [">= 0.9.1"])
     s.add_dependency(%q<paperclip>, ["~> 2.3.1.1"])
     s.add_dependency(%q<aws-s3>, [">= 0.6.2"])
     s.add_dependency(%q<acts_as_list>, [">= 0.1.2"])
