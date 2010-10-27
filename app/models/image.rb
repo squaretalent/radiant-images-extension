@@ -35,35 +35,15 @@ class Image < ActiveRecord::Base
     self.asset.url(style, include_updated_timestamp)
   end
   
-private
+  private 
   
-  class << self
-    def search(search, page)
-      unless search.blank?
-        queries = []
-        queries << 'LOWER(title) LIKE (:term)'
-        queries << 'LOWER(caption) LIKE (:term)'
-        queries << 'LOWER(asset_file_name) LIKE (:term)'
-        
-        sql = queries.join(' OR ')
-        @conditions = [sql, {:term => "%#{search.downcase}%" }]
-      else
-        @conditions = []
-      end
-      
-      self.all :conditions => @conditions
-      
+  def self.config_styles
+    styles = []
+    if Radiant::Config['images.styles']
+      styles = Radiant::Config['images.styles'].gsub(/\s+/,'').split(',') 
+      styles = styles.collect{|s| s.split('=')}.inject({}) {|ha, (k, v)| ha[k.to_sym] = v; ha}
     end
-    
-    def config_styles
-      styles = []
-      
-      if Radiant::Config['images.styles']
-        styles = Radiant::Config['images.styles'].gsub(/\s+/,'').split(',') 
-        styles = styles.collect{|s| s.split('=')}.inject({}) {|ha, (k, v)| ha[k.to_sym] = v; ha}
-      end
-      styles
-    end
+    styles
   end
-    
+        
 end

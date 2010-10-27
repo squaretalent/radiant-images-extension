@@ -5,30 +5,17 @@ class Admin::ImagesController < Admin::ResourceController
   around_filter :rescue_s3_exceptions, :only => [:create, :edit, :destroy]
   
   def index
-    @images = Image.paginate :page => params[:page], :per_page => 20
+    @images = Image.paginate :page => params[:page], :per_page => params[:pp] || 25
   end
   
-  
-  def search 
-    @images = Image.search params[:search], params[:p]
-
-    respond_to do |format|
-      format.html { render }
-      format.js { render @images }
-      format.xml { render :xml => @images.to_xml }
-      format.json { render :json => @images.to_json }
-    end
-  end
   
 private
 
   def index_assets
-    include_javascript 'admin/extensions/images/index'
     include_stylesheet 'admin/extensions/images/index'
   end
   
   def edit_assets
-    include_javascript 'admin/extensions/images/edit'
     include_stylesheet 'admin/extensions/images/edit'
   end
   

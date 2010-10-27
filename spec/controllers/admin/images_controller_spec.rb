@@ -42,30 +42,7 @@ describe Admin::ImagesController do
       end
     
     end  
-    
-    context 'search action' do
-      
-      before :each do
-        login_as :admin
-        stub(AWS::S3::Base).establish_connection!
-      end
-      
-      it 'should render the search template on search action' do
-        get :search
-        response.should render_template(:search)
-      end
-      
-      it 'should return valid search results'
-      
-      it 'should respond to JS requests correctly'
-      
-      it 'should respond to xml requests correctly'
-      
-      it 'should respond to json requests correctly'
-            
-    end
-    
+        
   end
     
-  
 end

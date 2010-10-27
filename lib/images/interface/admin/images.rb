@@ -22,10 +22,9 @@ module Images
                 image.new = image.edit
                 image.index = Radiant::AdminUI::RegionSet.new do |index|
                   index.attributes.concat %w{thumbnail title modify }
-                  index.bottom.concat %w{ create search }
+                  index.bottom.concat %w{ create }
                   index.paginate.concat %w{ pagination }
                 end
-                image.searchearch = image.index
                 image.remove = image.index
               end
             end

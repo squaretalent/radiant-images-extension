@@ -1,13 +1,8 @@
-%ul{ :style =>'float: left'}
+%ul
   - render_region :bottom do |bottom|
     - bottom.create do
       %li
         = link_to image('plus') + " " + t("new_image"), new_admin_image_path
-    - bottom.search do
-      %li
-        - form_tag nil, :method => 'get' do
-          = text_field_tag 'search', params[:search], :type => 'search'
-          = observe_field 'search', :frequency => 2, :update => 'images', :url =>  { :controller => 'images', :action=> 'index' }, :method => 'get', :with => "'search=' + escape(value)"
 - render_region :paginate do |paginate|
   - paginate.pagination do
     = pagination_for(@images)
