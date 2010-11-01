@@ -64,42 +64,96 @@ describe Images::Tags::Core do
   
   describe '<r:images:each>' do
     
-    it 'should expand its contents once for each of the available images'
+    it 'should expand its contents once for each of the available images' do
+      input    = '<r:images:each>test </r:images:each>'
+      expected = 'test test test test test test '
+      pages(:home).should render(input).as(expected)
+    end
     
-    it 'should not expand its contents if there are no images available'
+    it 'should not expand its contents if there are no images available' do
+      mock(Image).all { [] }
+      input    = '<r:images:each>test </r:images:each>'
+      expected = ''
+      pages(:home).should render(input).as(expected)
+    end
     
-    it 'should limit the number of images based on the limit parameter passed'
+    it 'should limit the number of images based on the limit parameter passed' do
+      input    = '<r:images:each limit="3"><r:image:title /> </r:images:each>'
+      expected = 'first second third '
+      pages(:home).should render(input).as(expected)
+    end
     
-    it 'should use the offset parameter to ignore results before the offset'
+    it 'should use the offset parameter to ignore results before the offset' do
+      input    = '<r:images:each limit="3" offset="2"><r:image:title /> </r:images:each>'
+      expected = 'third fourth fifth '
+      pages(:home).should render(input).as(expected)
+    end
     
-    it 'should order the results based by the key passed'
+    it 'should order the results based by the key passed' do
+      input    = '<r:images:each by="title"><r:image:title /> </r:images:each>'
+      expected = 'third fifth first fourth second sixth '
+      pages(:home).should render(input).as(expected)
+    end
     
-    it 'should order the results by ascending order when asc is passed for the order'
+    it 'should order the results by ascending order when asc is passed for the order' do
+      input    = '<r:images:each by="id" order="asc" ><r:image:title /> </r:images:each>'
+      expected = 'first second third fourth fifth sixth '
+      pages(:home).should render(input).as(expected)
+    end
     
-    it 'should order the results by descending order when desc is passed for the order'
+    it 'should order the results by descending order when desc is passed for the order' do
+      input    = '<r:images:each by="id" order="desc" ><r:image:title /> </r:images:each>'
+      expected = 'sixth fifth fourth third second first '
+      pages(:home).should render(input).as(expected)
+    end
     
   end
   
   describe '<r:image>' do
     
-    it 'should add the image namespace to nested radius tags'
+    it 'should add the image namespace to nested radius tags' do
+      input    = '<r:image title="first"><r:title /></r:image>'
+      expected = 'first'
+      pages(:home).should render(input).as(expected)
+    end
     
-    it 'should allow images to be looked up by their id attribute'
+    it 'should render its contents if there is a current image' do
+      input    = '<r:images:each><r:image title="first"><r:title /> </r:image></r:images:each>'
+      expected = 'first second third fourth fifth sixth '
+      pages(:home).should render(input).as(expected)
+    end
     
-    it 'should allow images to be looked up by their position attribute'
+    it 'should not render its contents if there is no current image' do
+      input    = '<r:image title="invalid"><r:title /></r:image>'
+      expected = ''
+      pages(:home).should render(input).as(expected)
+    end
+    
+    it 'should allow images to be looked up by their id attribute' do
+      mock(Image).find('5') { @images[4] }
+      input    = '<r:image id="5"><r:title /></r:image>'
+      expected = 'fifth'
+      pages(:home).should render(input).as(expected)
+    end
+    
+    it 'should allow images to be looked up by their position attribute' do
+      input    = '<r:image position="3"><r:title /></r:image>'
+      expected = 'third'
+      pages(:home).should render(input).as(expected)
+    end
         
-    it 'should allow images to be looked up by their title attribute'
-    
-    it 'should render its contents if there is a current image'
-    
-    it 'should not render its contents if there is no current image'
+    it 'should allow images to be looked up by their title attribute' do
+      input    = '<r:image title="sixth"><r:title /></r:image>'
+      expected = 'sixth'
+      pages(:home).should render(input).as(expected)
+    end
     
   end
 
   describe '<r:image:url>' do
     
     it 'should render a valid url given a valid image context'
-    
+        
     it 'should not render a valid url if there is no current image'
     
     it 'should render the url with the default style if not specified'
@@ -120,27 +174,51 @@ describe Images::Tags::Core do
     
   end
   
-  describe '<r:id>' do
+  describe '<r:image:id>' do
     
-    it 'should render the id of the current image context'
+    it 'should render the id of the current image context' do
+      input    = '<r:image title="sixth"><r:id /></r:image>'
+      expected = @images[5].id.to_s
+      pages(:home).should render(input).as(expected)
+    end
     
-    it 'should not render anything if there is no current image context'
+    it 'should not render anything if there is no current image context' do
+      input    = '<r:image title="invalid"><r:id /></r:image>'
+      expected = ''
+      pages(:home).should render(input).as(expected)
+    end
     
   end
   
-  describe '<r:title>' do
+  describe '<r:image:title>' do
     
-    it 'should render the title of the current image context'
+    it 'should render the title of the current image context' do
+      input    = '<r:image title="fourth"><r:title /></r:image>'
+      expected = 'fourth'
+      pages(:home).should render(input).as(expected)
+    end
     
-    it 'should not render anything if there is no current image context'
+    it 'should not render anything if there is no current image context' do
+      input    = '<r:image title="invalid"><r:title /></r:image>'
+      expected = ''
+      pages(:home).should render(input).as(expected)
+    end
     
   end
   
-  describe '<r:position>' do
+  describe '<r:image:position>' do
     
-    it 'should render the position of the current image context'
+    it 'should render the position of the current image context' do
+      input    = '<r:image title="first"><r:position /></r:image>'
+      expected = '1'
+      pages(:home).should render(input).as(expected)
+    end
     
-    it 'should not render anything if there is no current image context'
+    it 'should not render anything if there is no current image context' do
+      input    = '<r:image title="invalid"><r:position /></r:image>'
+      expected = ''
+      pages(:home).should render(input).as(expected)
+    end
     
   end
   
