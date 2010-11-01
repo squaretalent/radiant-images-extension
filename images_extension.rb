@@ -10,7 +10,7 @@ class ImagesExtension < Radiant::Extension
   url "http://github.com/squaretalent/radiant-images-extension"
     
   extension_config do |config|
-    config.gem 'paperclip', :version => '~> 2.3.1.1'
+    config.gem 'paperclip', :version => '~> 2.3.5'
     config.gem 'aws-s3', :version => '>= 0.6.2', :lib => 'aws/s3'
     config.gem 'acts_as_list', :version => '>= 0.1.2'
     
@@ -27,6 +27,7 @@ class ImagesExtension < Radiant::Extension
       admin.image = Radiant::AdminUI.load_default_image_regions
     end
     
+    Paperclip::Railtie.insert
     
     Page.send :include, Images::Tags::Core
 

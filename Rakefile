@@ -8,7 +8,7 @@ begin
     gem.homepage = "http://github.com/squaretalent/radiant-images-extension"
     gem.authors = ['squaretalent']
     gem.add_dependency 'radiant',           '>= 0.9.1'
-    gem.add_dependency 'paperclip',         '~> 2.3.1.1'
+    gem.add_dependency 'paperclip',         '~> 2.3.5'
     gem.add_dependency 'aws-s3',            '>= 0.6.2'
     gem.add_dependency 'acts_as_list',      '>= 0.1.2'
     gem.add_development_dependency 'rspec', '>= 1.3.0'

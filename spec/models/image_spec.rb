@@ -5,17 +5,17 @@ describe Image do
   
   before :each  do
     stub(AWS::S3::Base).establish_connection!
-    @image = images(:first)
+    @image = images(:second)
   end
   
   context 'fields' do
   
     it 'should have a title' do
-      @image.title.should == 'first'
+      @image.title.should == 'second'
     end
   
     it 'should have a caption' do
-      @image.caption.should == "caption for #{@image.title.to_s}"
+      @image.caption.should == "caption for second"
     end
     
   end
@@ -37,7 +37,7 @@ describe Image do
     end
     
     it 'should have a file_name' do
-      @image.asset_file_name.should == 'first.png'
+      @image.asset_file_name.should == 'second.png'
     end
     
     it 'should have a file_type' do
@@ -45,14 +45,13 @@ describe Image do
     end
     
     it 'should have a file_size' do
-      @image.asset_file_size.should == "1000"
+      @image.asset_file_size.should == "1001"
     end
     
     it 'should require a valid asset' do
       # create an invalid image without an asset!
       image = Image.new
-      image.valid?
-      image.errors.on(:asset).should include 'must be set'
+      image.should_not be_valid
     end
     
     it 'should require a unique filename' do
@@ -63,8 +62,7 @@ describe Image do
     
     it 'should only allow image content types' do
       @image.asset_content_type = 'not/image'
-      @image.valid?
-      @image.errors.on(:asset).should include 'not one of the allowed file types'
+      @image.should_not be_valid
     end
     
   end
