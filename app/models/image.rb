@@ -31,7 +31,7 @@ class Image < ActiveRecord::Base
     self.title = self.asset_file_name if title.blank?
   end
   
-  def url(style = nil, include_updated_timestamp = true)
+  def url(style = Radiant::Config['images.default'], include_updated_timestamp = true)
     self.asset.url(style, include_updated_timestamp)
   end
   
