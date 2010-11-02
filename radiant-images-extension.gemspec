@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{radiant-images-extension}
-  s.version = "0.3.3"
+  s.version = "0.3.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["squaretalent"]
-  s.date = %q{2010-10-27}
+  s.date = %q{2010-11-02}
   s.description = %q{Image Radiant Extension management tool, meant only to be useful to pages and extensions that need to require images.}
   s.email = %q{info@squaretalent.com}
   s.extra_rdoc_files = [
@@ -50,7 +50,6 @@ Gem::Specification.new do |s|
      "public/images/extensions/images/missing_icon.png",
      "public/images/extensions/images/missing_normal.png",
      "public/images/extensions/images/missing_preview.png",
-     "public/javascripts/admin/extensions/images/edit.js",
      "public/stylesheets/sass/admin/extensions/images/edit.sass",
      "public/stylesheets/sass/admin/extensions/images/index.sass",
      "radiant-images-extension.gemspec",
@@ -81,14 +80,14 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<radiant>, [">= 0.9.1"])
-      s.add_runtime_dependency(%q<paperclip>, ["~> 2.3.1.1"])
+      s.add_runtime_dependency(%q<paperclip>, ["~> 2.3.5"])
       s.add_runtime_dependency(%q<aws-s3>, [">= 0.6.2"])
       s.add_runtime_dependency(%q<acts_as_list>, [">= 0.1.2"])
       s.add_development_dependency(%q<rspec>, [">= 1.3.0"])
       s.add_development_dependency(%q<rr>, [">= 1.0.0"])
     else
       s.add_dependency(%q<radiant>, [">= 0.9.1"])
-      s.add_dependency(%q<paperclip>, ["~> 2.3.1.1"])
+      s.add_dependency(%q<paperclip>, ["~> 2.3.5"])
       s.add_dependency(%q<aws-s3>, [">= 0.6.2"])
       s.add_dependency(%q<acts_as_list>, [">= 0.1.2"])
       s.add_dependency(%q<rspec>, [">= 1.3.0"])
@@ -96,7 +95,7 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<radiant>, [">= 0.9.1"])
-    s.add_dependency(%q<paperclip>, ["~> 2.3.1.1"])
+    s.add_dependency(%q<paperclip>, ["~> 2.3.5"])
     s.add_dependency(%q<aws-s3>, [">= 0.6.2"])
     s.add_dependency(%q<acts_as_list>, [">= 0.1.2"])
     s.add_dependency(%q<rspec>, [">= 1.3.0"])
