@@ -41,7 +41,7 @@ module Images
       }
       tag 'images:each' do |tag|
         context = ''
-        tag.locals.images.each do |image|
+        Helpers.all_images_with_options(tag).each do |image|
           tag.locals.image = image
           context << tag.expand
         end

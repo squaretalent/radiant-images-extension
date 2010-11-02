@@ -71,7 +71,8 @@ describe Images::Tags::Core do
     end
     
     it 'should not expand its contents if there are no images available' do
-      mock(Image).all { [] }
+      mock(Image).all() { [] }
+      mock(Image).all(anything) { [] }
       input    = '<r:images:each>test </r:images:each>'
       expected = ''
       pages(:home).should render(input).as(expected)
@@ -91,18 +92,18 @@ describe Images::Tags::Core do
     
     it 'should order the results based by the key passed' do
       input    = '<r:images:each by="title"><r:image:title /> </r:images:each>'
-      expected = 'third fifth first fourth second sixth '
+      expected = 'fifth first fourth second sixth third '
       pages(:home).should render(input).as(expected)
     end
     
     it 'should order the results by ascending order when asc is passed for the order' do
-      input    = '<r:images:each by="id" order="asc" ><r:image:title /> </r:images:each>'
+      input    = '<r:images:each by="position" order="asc" ><r:image:title /> </r:images:each>'
       expected = 'first second third fourth fifth sixth '
       pages(:home).should render(input).as(expected)
     end
     
     it 'should order the results by descending order when desc is passed for the order' do
-      input    = '<r:images:each by="id" order="desc" ><r:image:title /> </r:images:each>'
+      input    = '<r:images:each by="position" order="desc" ><r:image:title /> </r:images:each>'
       expected = 'sixth fifth fourth third second first '
       pages(:home).should render(input).as(expected)
     end

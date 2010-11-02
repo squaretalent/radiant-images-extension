@@ -6,6 +6,10 @@ module Images
       
       class << self
         
+        def all_images_with_options(tag)
+          Image.all image_options(tag)
+        end
+        
         def current_images(tag)
           result = nil
           
