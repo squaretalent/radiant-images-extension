@@ -152,25 +152,59 @@ describe Images::Tags::Core do
 
   describe '<r:image:url>' do
     
-    it 'should render a valid url given a valid image context'
-        
-    it 'should not render a valid url if there is no current image'
+    before :each do
+      asset = Paperclip::Attachment.new('asset', @images[0], { :url => Radiant::Config['images.url'] })
+      stub(Image).find_by_title('first') { @images[0] }
+      stub.proxy(Image).find_by_title('invalid')
+      stub(@images[0]).asset { asset }
+    end
+            
+    it 'should not render a valid url if there is no current image' do
+      input    = '<r:image title="invalid"><r:url /></r:image>'
+      expected = ''
+      pages(:home).should render(input).as(expected)
+    end
     
-    it 'should render the url with the default style if not specified'
+    it 'should render the url with the default style if not specified' do
+      input    = '<r:image title="first"><r:url /></r:image>'
+      expected = '/images/first-original.png'
+      pages(:home).should render(input).as(expected)
+    end
     
-    it 'should render the url with the style specified by the user'
+    it 'should render the url with the style specified by the user' do
+      input    = '<r:image title="first"><r:url style="icon" /></r:image>'
+      expected = '/images/first-icon.png'
+      pages(:home).should render(input).as(expected)
+    end
     
   end
   
   describe '<r:image:tag>' do
     
-    it 'should render a valid img tag given a valid image context'
+    before :each do
+      asset = Paperclip::Attachment.new('asset', @images[0], { :url => Radiant::Config['images.url'] })
+      stub(Image).find_by_title('first') { @images[0] }
+      stub.proxy(Image).find_by_title('invalid')
+      stub(@images[0]).asset { asset }
+    end
+        
+    it 'should not render a valid img tag if there is no current image' do
+      input    = '<r:image title="invalid"><r:tag /></r:image>'
+      expected = ''
+      pages(:home).should render(input).as(expected)
+    end
     
-    it 'should not render a valid img tag if there is no current image'
+    it 'should render the img tag with the default style if not specified' do
+      input    = '<r:image title="first"><r:tag /></r:image>'
+      expected = '<img src="/images/first-original.png" />'
+      pages(:home).should render(input).as(expected)
+    end
     
-    it 'should render the img tag with the default style if not specified'
-    
-    it 'should render the img tag with the style specified by the user'
+    it 'should render the img tag with the style specified by the user' do
+      input    = '<r:image title="first"><r:tag style="icon"/></r:image>'
+      expected = '<img src="/images/first-icon.png" />'
+      pages(:home).should render(input).as(expected)
+    end
     
   end
   

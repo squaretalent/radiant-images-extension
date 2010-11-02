@@ -6,7 +6,7 @@ begin
     gem.description = 'Image Radiant Extension management tool, meant only to be useful to pages and extensions that need to require images.'
     gem.email = "info@squaretalent.com"
     gem.homepage = "http://github.com/squaretalent/radiant-images-extension"
-    gem.authors = ['squaretalent']
+    gem.authors = ['Dirk Kelly', 'Mario Visic']
     gem.add_dependency 'radiant',           '>= 0.9.1'
     gem.add_dependency 'paperclip',         '~> 2.3.5'
     gem.add_dependency 'aws-s3',            '>= 0.6.2'
