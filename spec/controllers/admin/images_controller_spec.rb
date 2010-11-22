@@ -106,7 +106,7 @@ describe Admin::ImagesController do
       controller.send :rescue_s3_exceptions do
         raise AWS::S3::ResponseError.new('some error' ,'')
       end
-      (controller.send :flash)[:error].should == 'some error'
+      flash.now[:error].should == 'some error'
       
     end
     
