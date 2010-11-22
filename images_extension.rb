@@ -1,23 +1,16 @@
-# Uncomment this if you reference any of your controllers in activate
-# require_dependency 'application_controller'
-
 require 'paperclip'
 require 'aws/s3'
+require 'acts_as_list'
 
 class ImagesExtension < Radiant::Extension
-  version "0.1"
+  version YAML::load_file(File.join(File.dirname(__FILE__), 'VERSION'))
   description "Images stores images on s3"
   url "http://github.com/squaretalent/radiant-images-extension"
     
   extension_config do |config|
-    config.gem 'paperclip', :version => '~> 2.3.5'
-    config.gem 'aws-s3', :version => '>= 0.6.2', :lib => 'aws/s3'
-    config.gem 'acts_as_list', :version => '>= 0.1.2'
-    
-    if RAILS_ENV == :test
-      config.gem 'rr', :version => '>= 1.0.0'
-    end
-    
+    config.gem 'paperclip',    :lib => 'paperclip'
+    config.gem 'aws-s3',       :lib => 'aws/s3'
+    config.gem 'acts_as_list', :lib => 'acts_as_list'
   end
   
   def activate
