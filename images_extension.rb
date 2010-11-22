@@ -49,12 +49,12 @@ class ImagesExtension < Radiant::Extension
     
   end
   
-  def self.s3_config
+  def self.s3_credentials
     result = {}
     if File.exists?(File.join(Rails.root, 'config', 's3.yml'))
       result.merge!(YAML.load_file(File.join(Rails.root, 'config', 's3.yml'))[RAILS_ENV])
     else
-      result['acces_key_id']      = Radiant::Config['s3.key']
+      result['access_key_id']     = Radiant::Config['s3.key']
       result['secret_access_key'] = Radiant::Config['s3.secret']
     end
     result

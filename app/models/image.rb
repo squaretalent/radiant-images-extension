@@ -16,8 +16,8 @@ class Image < ActiveRecord::Base
                     :default_url      => '/images/extensions/images/missing_:style.png',
                     :storage          => Radiant::Config['images.storage'] == 's3' ? :s3 : :filesystem, 
                     :s3_credentials   => {
-                      :access_key_id      => ImagesExtension.s3_config['access_key_id'],
-                      :secret_access_key  => ImagesExtension.s3_config['secret_access_key']
+                      :access_key_id      => ImagesExtension.s3_credentials['access_key_id'],
+                      :secret_access_key  => ImagesExtension.s3_credentials['secret_access_key']
                     },
                     :s3_host_alias    => Radiant::Config['s3.host_alias'],
                     :bucket           => Radiant::Config['s3.bucket'],
