@@ -36,12 +36,11 @@ class ImagesExtension < Radiant::Extension
     Radiant::Config['images.styles']  ||= "icon=45x45#,preview=200x200#,normal=640x640#"
     Radiant::Config['images.url']     ||= "/:class/:basename-:style.:extension"
     
-    Radiant::Config['s3.bucket']      ||= "set"
-    Radiant::Config['s3.host_alias']  ||= "set"
-    Radiant::Config['s3.key']         ||= "set"
-    Radiant::Config['s3.secret']      ||= "set"
+    #Radiant::Config['s3.bucket']
+    #Radiant::Config['s3.host_alias']
+    #Radiant::Config['s3.key']
+    #Radiant::Config['s3.secret']
     
-
     unless Radiant::Config["images.image_magick_path"].nil?
       # Passenger needs this configuration to work with Image magick
       # Radiant::Config["assets.image_magick_path"] = '/usr/local/bin/' # OS X Homebrew
@@ -49,4 +48,16 @@ class ImagesExtension < Radiant::Extension
     end
     
   end
+  
+  def self.s3_config
+    result = {}
+    if File.exists?(File.join(Rails.root, 'config', 's3.yml'))
+      result.merge!(YAML.load_file(File.join(Rails.root, 'config', 's3.yml'))[RAILS_ENV])
+    else
+      result['acces_key_id']      = Radiant::Config['s3.key']
+      result['secret_access_key'] = Radiant::Config['s3.secret']
+    end
+    result
+  end
+  
 end
