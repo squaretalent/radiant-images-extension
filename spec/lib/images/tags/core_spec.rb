@@ -1,4 +1,4 @@
-require 'spec_helper'
+require File.dirname(__FILE__) + "/../../../spec_helper"
 
 describe Images::Tags::Core do
   
@@ -7,6 +7,11 @@ describe Images::Tags::Core do
   before(:all) do
     @images = [ images(:first), images(:second), images(:third),
                 images(:fourth), images(:fifth), images(:sixth) ]
+    Radiant::Config['images.default'] = "original"
+    Radiant::Config['images.path']    = ":rails_root/public/:class/:basename-:style.:extension"
+    Radiant::Config['images.storage'] = "local"
+    Radiant::Config['images.styles']  = "icon=45x45#,preview=200x200#,normal=640x640#"
+    Radiant::Config['images.url']     = "/:class/:basename-:style.:extension"
   end
   
   before(:each) do
