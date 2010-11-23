@@ -8,11 +8,11 @@ describe ImagesExtension do
       
       before :each do
         
-        if File.exists?(File.join(Rails.root,'config','s3.yml'))
-          FileUtils.mv(File.join(Rails.root,'config','s3.yml'),File.join(Rails.root,'config','s3-back.yml'))
+        if File.exists?(File.join(Rails.root,'config','amazon_s3.yml'))
+          FileUtils.mv(File.join(Rails.root,'config','amazon_s3.yml'),File.join(Rails.root,'config','amazon_s3-back.yml'))
         end
         
-        f = File.new(File.join(Rails.root,'config','s3.yml'), 'w')
+        f = File.new(File.join(Rails.root,'config','amazon_s3.yml'), 'w')
         f << "#{RAILS_ENV}:\n"
         f << "  access_key_id: FILE KEY\n"
         f << "  secret_access_key: FILE SECRET"
@@ -25,10 +25,10 @@ describe ImagesExtension do
       end
       
       after :each do
-        File.delete(File.join(Rails.root,'config','s3.yml'))
+        File.delete(File.join(Rails.root,'config','amazon_s3.yml'))
           
-        if File.exists?(File.join(Rails.root,'config','s3-back.yml'))
-          FileUtils.mv(File.join(Rails.root,'config','s3-back.yml'),File.join(Rails.root,'config','s3-back.yml'))
+        if File.exists?(File.join(Rails.root,'config','amazon_s3-back.yml'))
+          FileUtils.mv(File.join(Rails.root,'config','amazon_s3-back.yml'),File.join(Rails.root,'config','amazon_s3.yml'))
         end
       end
       
@@ -41,8 +41,8 @@ describe ImagesExtension do
         Radiant::Config['s3.key']    = 'DB KEY'
         Radiant::Config['s3.secret'] = 'DB SECRET'
         
-        if File.exists?(File.join(Rails.root,'config','s3.yml'))
-          FileUtils.mv(File.join(Rails.root,'config','s3.yml'),File.join(Rails.root,'config','s3-back.yml'))
+        if File.exists?(File.join(Rails.root,'config','amazon_s3.yml'))
+          FileUtils.mv(File.join(Rails.root,'config','amazon_s3.yml'),File.join(Rails.root,'config','amazon_s3-back.yml'))
         end
         
       end
@@ -52,8 +52,8 @@ describe ImagesExtension do
       end
       
       after :each do
-        if File.exists?(File.join(Rails.root,'config','s3-back.yml'))
-          FileUtils.mv(File.join(Rails.root,'config','s3-back.yml'),File.join(Rails.root,'config','s3-back.yml'))
+        if File.exists?(File.join(Rails.root,'config','amazon_s3-back.yml'))
+          FileUtils.mv(File.join(Rails.root,'config','amazon_s3-back.yml'),File.join(Rails.root,'config','amazon_s3.yml'))
         end
       end
       
