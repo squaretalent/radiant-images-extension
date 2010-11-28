@@ -1,6 +1,7 @@
 require 'paperclip'
 require 'aws/s3'
 require 'acts_as_list'
+require 'will_paginate'
 
 class ImagesExtension < Radiant::Extension
   version YAML::load_file(File.join(File.dirname(__FILE__), 'VERSION'))
