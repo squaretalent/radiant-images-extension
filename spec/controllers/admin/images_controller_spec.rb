@@ -37,11 +37,6 @@ describe Admin::ImagesController do
         get :index
         assigns(:images).should == @images
       end
-
-      it 'should use pagination' do
-        get :index
-        assigns(:images).class.should == WillPaginate::Collection
-      end
       
       it 'should include the index stylesheet' do
         mock(controller).index_assets

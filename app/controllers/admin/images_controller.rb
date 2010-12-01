@@ -4,10 +4,6 @@ class Admin::ImagesController < Admin::ResourceController
   before_filter :edit_assets,           :only => [ :show, :edit ]
   around_filter :rescue_s3_exceptions,  :only => [ :create, :update, :destroy ]
   
-  def index
-    @images = Image.paginate :page => params[:page], :per_page => params[:pp] || 25
-  end
-  
   protected
 
   def index_assets
