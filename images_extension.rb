@@ -41,6 +41,7 @@ class ImagesExtension < Radiant::Extension
     #Radiant::Config['s3.host_alias']
     #Radiant::Config['s3.key']
     #Radiant::Config['s3.secret']
+    #Radiant::Config['s3.protocol']
     
     unless Radiant::Config["images.image_magick_path"].nil?
       # Passenger needs this configuration to work with Image magick

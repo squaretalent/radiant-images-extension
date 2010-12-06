@@ -20,6 +20,7 @@ class Image < ActiveRecord::Base
                       :secret_access_key  => ImagesExtension.s3_credentials['secret_access_key']
                     },
                     :s3_host_alias    => Radiant::Config['s3.host_alias'],
+                    :s3_protocol      => Radiant::Config['s3.protocol'],
                     :bucket           => Radiant::Config['s3.bucket'],
                     :url              => Radiant::Config['images.url'],
                     :path             => Radiant::Config['images.path']
