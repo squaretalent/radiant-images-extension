@@ -23,6 +23,7 @@ class ImagesExtension < Radiant::Extension
     
     Paperclip::Railtie.insert
     
+    Page.send :include, Images::Models::Page
     Page.send :include, Images::Tags::Core
 
     UserActionObserver.instance.send :add_observer!, Image 
