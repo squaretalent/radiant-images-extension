@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{radiant-images-extension}
-  s.version = "0.4.4"
+  s.version = "0.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Dirk Kelly", "Mario Visic"]
-  s.date = %q{2010-12-06}
+  s.date = %q{2010-12-09}
   s.description = %q{Image Radiant Extension management tool, meant only to be useful to pages and extensions that need to require images.}
   s.email = %q{info@squaretalent.com}
   s.extra_rdoc_files = [
@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "app/controllers/admin/images_controller.rb",
+    "app/models/attachment.rb",
     "app/models/image.rb",
     "app/views/admin/images/_bottom.haml",
     "app/views/admin/images/_fields.haml",
@@ -38,10 +39,12 @@ Gem::Specification.new do |s|
     "db/migrate/20100601042237_create_images.rb",
     "db/migrate/20100602044124_add_position_to_images.rb",
     "db/migrate/20100929150930_change_images_to_created_by_id.rb",
+    "db/migrate/20101208095450_create_attachments.rb",
     "features/support/env.rb",
     "features/support/paths.rb",
     "images_extension.rb",
     "lib/images/interface/admin/images.rb",
+    "lib/images/models/page.rb",
     "lib/images/tags/core.rb",
     "lib/images/tags/helpers.rb",
     "lib/radiant-images-extension.rb",
@@ -54,10 +57,12 @@ Gem::Specification.new do |s|
     "public/stylesheets/sass/admin/extensions/images/index.sass",
     "radiant-images-extension.gemspec",
     "spec/controllers/admin/images_controller_spec.rb",
+    "spec/datasets/attachments.rb",
     "spec/datasets/images.rb",
     "spec/datasets/squaretalent.png",
     "spec/lib/images/tags/core_spec.rb",
     "spec/lib/images_extension_spec.rb",
+    "spec/models/attachment_spec.rb",
     "spec/models/image_spec.rb",
     "spec/spec.opts",
     "spec/spec_helper.rb"
@@ -68,9 +73,11 @@ Gem::Specification.new do |s|
   s.summary = %q{Images Extension for Radiant CMS}
   s.test_files = [
     "spec/controllers/admin/images_controller_spec.rb",
+    "spec/datasets/attachments.rb",
     "spec/datasets/images.rb",
     "spec/lib/images/tags/core_spec.rb",
     "spec/lib/images_extension_spec.rb",
+    "spec/models/attachment_spec.rb",
     "spec/models/image_spec.rb",
     "spec/spec_helper.rb"
   ]
