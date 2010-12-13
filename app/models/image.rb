@@ -3,6 +3,8 @@ class Image < ActiveRecord::Base
   belongs_to :created_by, :class_name => 'User'
   belongs_to :updated_by, :class_name => 'User'
   
+  has_many   :attachments
+  
   before_save :assign_title
   validates_uniqueness_of :asset_file_name, :message => 'This file already exists', :allow_nil => true
   validates_uniqueness_of :title

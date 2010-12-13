@@ -1,64 +1,77 @@
 module Images
   module Tags
     class Helpers
-    
+      
+      CONDITIONS = ['images.position','images.title','images.id']
+      
       class TagError < StandardError; end
       
       class << self
         
-        def all_images_with_options(tag)
-          Image.all image_options(tag)
-        end
-        
         def current_images(tag)
-          result = nil
+          @conditions = CONDITIONS.dup
           
-          if tag.locals.images.present?
-            result = tag.locals.images
-          elsif tag.attr['key'] and tag.attr['value']
-            result = Image.find(:all, :conditions => { tag.attr['key'].to_sym => tag.attr['value'].to_s }) rescue nil
-          else
-            result = Image.all
+          if tag.locals.images.nil?
+            return Image.all image_conditions(tag).merge(image_options(tag))
           end
-          
-          result
+        
+          if tag.locals.images.empty?
+            return tag.locals.images
+          end
+        
+          images = tag.locals.images
+          if images.first.is_a?(Image)
+            images.all image_conditions(tag).merge(image_options(tag))
+          else            
+            # We're looking based on attachment positions, not image positions
+            @conditions.map! { |term| term.gsub('images.position','attachments.position') }
+            images.all image_conditions(tag).merge(image_options(tag)).merge(:joins => 'JOIN images ON images.id = attachments.image_id')
+          end
         end
         
         def current_image(tag)
-          result = nil
+          @conditions = CONDITIONS.dup
           
-          if tag.locals.image.present?
-            result = tag.locals.image
-          elsif tag.attr['id']
-            result = Image.find(tag.attr['id'])
-          elsif tag.attr['title']
-            result = Image.find_by_title(tag.attr['title'])
-          elsif tag.attr['position']
-            begin
-              result = tag.locals.images[(tag.attr['position']-1).to_i]
-            rescue
-              result = Image.find_by_position(tag.attr['position'].to_i)
-            end
+          # Images exist, and we're not looking to change the scope
+          if tag.locals.image.present? and image_conditions(tag).empty?
+            return tag.locals.image
           end
           
-          result
+          unless tag.locals.images.nil?
+            images = tag.locals.images
+            if images.first.is_a?(Image)
+              query = Image.all image_conditions(tag).merge(image_options(tag))
+            else
+              @conditions.map! { |term| term.gsub('images.position','attachments.position') }
+              query = Attachment.all image_conditions(tag).merge(image_options(tag)).merge(:joins => 'JOIN images ON images.id = attachments.image_id')
+              query = query.map { |a| a.image }
+            end
+            return (query && images).first
+          else
+            return Image.first image_conditions(tag).merge(image_options(tag))
+          end
         end
+        
+        private
         
         def image_options(tag)
           attr = tag.attr.symbolize_keys
-          by = attr[:by] || 'position'
-          order = attr[:order] || 'asc'
           
           options = {
-            :order => "#{by} #{order}",
-            :limit => attr[:limit] || nil,
+            :order  => "#{attr[:by]  || 'position'} #{attr[:order] || 'asc'}",
+            :limit  => attr[:limit]  || nil,
             :offset => attr[:offset] || nil
           }
         end
         
-        def image_and_options(tag)
-          options = tag.attr.dup
-          [find_image(tag, options), options]
+        def image_conditions(tag)
+          attr = tag.attr.symbolize_keys
+          
+          @conditions.reject! { |term| attr[term.split('.').last.to_sym].nil? }
+          
+          query = @conditions.map { |term| %{#{term} = ?} }.join(' AND ')
+          values = @conditions.map { |term| %{#{attr[term.split('.').last.to_sym]}} }
+          query.blank? ? {} : { :conditions => [query,*values] } 
         end
         
       end

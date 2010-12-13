@@ -40,12 +40,10 @@ module Images
         <pre><code><r:images:each [limit=0] [offset=0] [order="asc|desc"] [by="position|title|..."]>...</r:images:each></code></pre>
       }
       tag 'images:each' do |tag|
-        context = ''
-        Helpers.all_images_with_options(tag).each do |image|
+        content = tag.locals.images.map { |image|
           tag.locals.image = image
-          context << tag.expand
-        end
-        context
+          tag.expand
+        }
       end
       
       desc %{
@@ -57,7 +55,8 @@ module Images
       }
       tag 'image' do |tag|
         tag.locals.image = Helpers.current_image(tag)
-        tag.expand
+        
+        tag.expand if tag.locals.image.present?
       end
       
       desc %{
@@ -68,12 +67,8 @@ module Images
         <pre><code><r:image title='image'><r:url [style="preview|original"] /></r:image></code></pre>
       }
       tag 'image:url' do |tag|
-        result = nil
-        if tag.locals.image ||= Helpers.current_image(tag)
-          style = tag.attr['style'] || Radiant::Config['images.default'].to_sym
-          result = tag.locals.image.url(style, false)
-        end
-        result
+        style = tag.attr['style'] || Radiant::Config['images.default']
+        Helpers.current_image(tag).url(style.to_sym, false)
       end
       
       desc %{
@@ -81,30 +76,22 @@ module Images
         The style of the image can be specified by passing the style attribute.
         
         *Usage:*
-        <pre><code><r:image title='image'><r:tag [style="preview|original"] /></r:image></code></pre>
+        <pre><code><r:image title='image' style='preview'><r:tag [style="original"] /></r:image></code></pre>
       }
       tag 'image:tag' do |tag|
-        result = nil
-        if tag.locals.image ||= Helpers.current_image(tag)
-          style = tag.attr['style'] || Radiant::Config['images.default'].to_sym
-          result = %{<img src="#{tag.locals.image.url(style, false)}" />}
-        end
-        result
+        style = tag.attr['style'] || Radiant::Config['images.default']
+        %{<img src="#{Helpers.current_image(tag).url(style.to_sym, false)}" />}
       end
       
-      [:id, :title, :position].each do |method|
+      [:id, :title, :position].each do |symbol|
         desc %{
-          Outputs the #{method} of the current image
+          Outputs the #{symbol} of the current image
           
           *Usage:*
-          <pre><code><r:image title='image'><r:#{method} /></code></pre>
+          <pre><code><r:image title='image'><r:#{symbol} /></code></pre>
         }
-        tag "image:#{method}" do |tag|
-          result = nil
-          if tag.locals.image ||= Helpers.current_image(tag)
-            result = tag.locals.image.send(method)
-          end
-          result
+        tag "image:#{symbol}" do |tag|
+          Helpers.current_image(tag).send(symbol)
         end
       end
       
