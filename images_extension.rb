@@ -5,7 +5,7 @@ require 'will_paginate'
 
 class ImagesExtension < Radiant::Extension
   version YAML::load_file(File.join(File.dirname(__FILE__), 'VERSION'))
-  description "Images stores images on s3"
+  description "Image management tool, meant only to be useful to pages and extensions that require images."
   url "http://github.com/squaretalent/radiant-images-extension"
     
   extension_config do |config|
