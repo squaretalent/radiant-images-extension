@@ -28,7 +28,7 @@ class Image < ActiveRecord::Base
                     :path             => Radiant::Config['images.path']
                                  
   validates_attachment_presence :asset
-  validates_attachment_content_type :asset, :content_type => ['image/jpeg', 'image/png', 'image/gif']
+  validates_attachment_content_type :asset, :content_type => ['image/jpeg', 'image/png', 'image/gif', 'image/pjpeg', 'image/x-png']
   
   def assign_title
     self.title = self.asset_file_name if title.blank?
