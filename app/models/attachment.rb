@@ -7,6 +7,8 @@ class Attachment < ActiveRecord::Base
   belongs_to    :page
   belongs_to    :image
   
+  accepts_nested_attributes_for :image
+  
   belongs_to    :created_by,  :class_name => 'User'
   belongs_to    :updated_by,  :class_name => 'User'
   
