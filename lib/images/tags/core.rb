@@ -55,7 +55,7 @@ module Images
       }
       tag 'image' do |tag|
         tag.locals.image = Helper.current_image(tag)
-        
+                
         tag.expand if tag.locals.image.present?
       end
       
