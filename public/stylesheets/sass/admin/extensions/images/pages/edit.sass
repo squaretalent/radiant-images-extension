@@ -1,0 +1,162 @@
+#pages .page
+  padding-top: 28px
+  
+  ol#attachments
+    margin: 30px 0 0
+    
+#browse_images_popup
+
+  ol#images
+    margin: 0 15px
+
+#pages .page, #browse_images_popup
+  
+  ol#attachments, ol#images
+    overflow: hidden
+    
+    li.attachment, li.image
+      position: relative
+      float: left
+      padding: 10px
+      height: 100px
+      width: 100px
+      border:
+        radius: 6px
+      -moz:
+        border:
+          radius: 6px
+      -webkit:
+        border:
+          radius: 6px
+      cursor: move
+      overflow: hidden
+      *
+        vertical:
+          align: middle
+
+      .wrapper
+        display: table-cell
+        height: 100px
+        width: 100px
+        text:
+          align: center
+        vertical:
+          align: middle
+
+      img
+        width: 100px
+        max:
+          height: 100px
+
+      .title, .caption
+        display: none
+
+      .actions
+        position: absolute
+        display: block
+        width: 100%
+        top: 0
+        left: 0
+
+        .delete
+          position: absolute
+          cursor: pointer
+          right: 4px
+          top: 4px
+          width: 12px
+          visibility: hidden
+          
+      &:hover
+        background:
+          color: #f9f6fe
+          
+        .actions .delete
+          visibility: visible
+
+#browse_images_popup
+  min-width: 150px
+
+#browse_images_popup, #new_image_popup
+  position: relative
+  overflow: hidden
+  
+  .close
+    position: absolute
+    right: 2px
+    top: 9px
+    width: 20px
+    height: 20px
+    overflow: hidden
+    display: block
+    cursor: pointer
+    background:
+      image: url('/images/admin/minus_disabled.png')
+      repeat: no-repeat
+      position: 0 0
+    cursor: pointer
+  
+    &:hover
+      background:
+        image: url('/images/admin/minus.png')
+  
+  .popup_content
+    color: #333333
+        
+    ol
+      padding: 10px
+    
+      li
+        overflow: hidden
+        padding:
+          bottom: 18px
+        &.file
+          padding-bottom: 10px
+        &.submit
+          float: right
+          padding-bottom: 10px
+        label
+          display: block
+          float: left
+          width: 100px
+          padding-top: 6px
+      
+        input[type=text]
+          float: left
+          
+.part .popup.button
+  float: right
+  margin-right: 10px
+  margin-top: -25px
+  display: block
+  height: 16px
+  padding: 6px 8px
+  font:
+    size: 12px
+  background:
+    color: #eeeeee
+    image: url(/images/admin/buttons_background.png)
+    position: 0 0
+    repeat: repeat-x
+  color: #333333
+  text:
+    decoration: none
+    shadow: 1px 1px 1px #eeeeee
+  cursor: pointer
+  border:
+    radius: 5px
+  -moz:
+    border:
+      radius: 5px
+  -webkit:
+    border:
+      radius: 5px
+
+  img
+    position: relative
+    top: -2px
+
+  &:hover, &.active
+    background: #ebebeb
+    color: #000000
+    text:
+      shadow: 1px 1px 1px #FFFFFF
