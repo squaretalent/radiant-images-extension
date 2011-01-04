@@ -1,4 +1,8 @@
+@import compass
+@import modules/rounded
+
 #images_map
+  padding-bottom: 10px
 
   #images_headings
     :background
@@ -75,27 +79,34 @@
                 :text
                   :decoration underline
                   
-          &.modify
-            :float            right
-            :width            100px
+          &.actions
+            :float right
+            :width 100px
             :font
-              :size           10px
-
-            a
-              :color          #000000
-              :text
-                :decoration   none
-
-            span
-              :padding
-                :left         15px
-                :right        15px
-
-            .add_child
-              :background     url(/images/admin/plus.png) no-repeat 0 50%
-
-            .remove
-              :background     url(/images/admin/minus.png) no-repeat 0 50%
+              :size 10px
+            a.action, span.action.disabled
+              padding: 6px
+              margin: 0 25px 0 1px
+              font-size: 10px
+              img
+                vertical-align: -10%
+            a.action
+              color: black
+              text-decoration: none
+              &:hover
+                background: #eee image_url('admin/buttons_background.png') repeat-x
+                border: 1px solid #a5c9df
+                margin: 0 24px 0 0
+                +border-radius
+              &.selected
+                background: #c5e0f5
+                +linear-gradient(color_stops(#e5f5ff, #c5e0ff))
+                border: 1px solid #a5c9df
+                margin: 0 24px 0 0
+                +border-top-radius
+                +border-bottom-radius(0)
+            span.action.disabled
+              color: #ccc
 
 #actions
 
