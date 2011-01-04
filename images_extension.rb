@@ -16,6 +16,10 @@ class ImagesExtension < Radiant::Extension
   
   def activate
     
+    admin.page.edit.add :popups, 'image_popups'
+    admin.page.edit.add :main, 'image_scripts'
+    admin.page.edit.add :main, 'image_sheets'
+    
     unless defined? admin.image
       Radiant::AdminUI.send :include, Images::Interface::Admin::Images
       admin.image = Radiant::AdminUI.load_default_image_regions
@@ -25,7 +29,11 @@ class ImagesExtension < Radiant::Extension
     
     Page.send :include, Images::Models::Page
     Page.send :include, Images::Tags::Core
-
+    
+    if PagePartsExtension.activate
+      Admin::PagesController.helper Images::Helpers::PageParts
+    end
+    
     UserActionObserver.instance.send :add_observer!, Image 
     
     tab 'Content' do
