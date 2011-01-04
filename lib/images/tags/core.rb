@@ -13,7 +13,7 @@ module Images
         <pre><code><r:images>...</r:images></code></pre>
       }
       tag 'images' do |tag|
-        tag.locals.images = Helpers.current_images(tag)
+        tag.locals.images = Helper.current_images(tag)
         tag.expand
       end
       
@@ -54,33 +54,36 @@ module Images
         <pre><code><r:image [id=] [title=""] [position=]>...</r:image></code></pre>
       }
       tag 'image' do |tag|
-        tag.locals.image = Helpers.current_image(tag)
+        tag.locals.image = Helper.current_image(tag)
         
         tag.expand if tag.locals.image.present?
       end
       
       desc %{
         Outputs the full URL of the image including the filename. 
-        The style of the image can be specified by passing the style attribute.
+        The filter of the image can be specified by passing the style attribute.
         
         *Usage:*
-        <pre><code><r:image title='image'><r:url [style="preview|original"] /></r:image></code></pre>
+        <pre><code><r:image title='image'><r:url [filter="preview|original"] /></r:image></code></pre>
       }
       tag 'image:url' do |tag|
-        style = tag.attr['style'] || Radiant::Config['images.default']
-        Helpers.current_image(tag).url(style.to_sym, false)
+        filter = tag.attr['filter'] || Radiant::Config['images.default']
+        Helper.current_image(tag).url(filter.to_sym, false)
       end
       
       desc %{
         Outputs a very simple image tag.
-        The style of the image can be specified by passing the style attribute.
+        The filter of the image can be specified by passing the style attribute.
         
         *Usage:*
-        <pre><code><r:image title='image' style='preview'><r:tag [style="original"] /></r:image></code></pre>
+        <pre><code><r:image title='image' style='preview'><r:tag [filter="original"] /></r:image></code></pre>
       }
       tag 'image:tag' do |tag|
-        style = tag.attr['style'] || Radiant::Config['images.default']
-        %{<img src="#{Helpers.current_image(tag).url(style.to_sym, false)}" />}
+        filter = tag.attr['filter'] || Radiant::Config['images.default']
+        
+        attributes = Forms::Tags::Helpers.attributes(tag) rescue nil
+        
+        %{<img src="#{Helper.current_image(tag).url(filter.to_sym, false)}" #{attributes}/>}
       end
       
       [:id, :title, :position].each do |symbol|
@@ -91,7 +94,7 @@ module Images
           <pre><code><r:image title='image'><r:#{symbol} /></code></pre>
         }
         tag "image:#{symbol}" do |tag|
-          Helpers.current_image(tag).send(symbol)
+          Helper.current_image(tag).send(symbol)
         end
       end
       
