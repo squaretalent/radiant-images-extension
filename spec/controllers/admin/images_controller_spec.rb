@@ -106,7 +106,7 @@ describe Admin::ImagesController do
     end
     
     it 'should redirect to the admin images url' do
-      mock(controller).redirect_to(admin_images_url)
+      mock(controller).redirect_to(admin_images_path)
       controller.send :rescue_s3_exceptions do
         raise AWS::S3::ResponseError.new('error' ,'')
       end

@@ -19,7 +19,7 @@ class Admin::ImagesController < Admin::ResourceController
       yield
     rescue AWS::S3::ResponseError => e
       flash[:error] = e.to_s
-      redirect_to admin_images_url
+      redirect_to admin_images_path
     end
   end
   
