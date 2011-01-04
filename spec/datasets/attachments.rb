@@ -10,6 +10,7 @@ class AttachmentsDataset < Dataset::Base
           :image    => images(attachment),
           :page     => pages(page),
           :position => i+1
+        pages(page).attachments << attachments(attachment)
       end
     end
     
