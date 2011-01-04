@@ -1,6 +1,6 @@
 module Images
   module Tags
-    class Helpers
+    class Helper
       
       CONDITIONS = ['images.position','images.title','images.id']
       
@@ -11,45 +11,44 @@ module Images
         def current_images(tag)
           @conditions = CONDITIONS.dup
           
-          if tag.locals.images.nil?
-            return Image.all image_conditions(tag).merge(image_options(tag))
-          end
-        
-          if tag.locals.images.empty?
-            return tag.locals.images
-          end
-        
-          images = tag.locals.images
-          if images.first.is_a?(Image)
-            images.all image_conditions(tag).merge(image_options(tag))
-          else            
-            # We're looking based on attachment positions, not image positions
+          case 
+          when tag.locals.images.present?
+            images = tag.locals.images
+          when tag.locals.page.images.present?
             @conditions.map! { |term| term.gsub('images.position','attachments.position') }
-            images.all image_conditions(tag).merge(image_options(tag)).merge(:joins => 'JOIN images ON images.id = attachments.image_id')
+            images = tag.locals.page.attachments
+            images = images.all image_conditions(tag).merge(image_options(tag)).merge(:joins => 'JOIN images ON images.id = attachments.image_id')
+          else
+            images = Image.all image_conditions(tag).merge(image_options(tag))
           end
+          
+          return images
+          
         end
         
         def current_image(tag)
           @conditions = CONDITIONS.dup
           
-          # Images exist, and we're not looking to change the scope
-          if tag.locals.image.present? and image_conditions(tag).empty?
-            return tag.locals.image
-          end
+          tag.locals.image = image_conditions(tag).present? ? nil : tag.locals.image
           
-          unless tag.locals.images.nil?
-            images = tag.locals.images
-            if images.first.is_a?(Image)
+          case
+          when tag.locals.image.present?
+            image = tag.locals.image
+          when tag.locals.image.nil?
+            case
+            when tag.locals.images.first.is_a?(Image)
               query = Image.all image_conditions(tag).merge(image_options(tag))
             else
               @conditions.map! { |term| term.gsub('images.position','attachments.position') }
               query = Attachment.all image_conditions(tag).merge(image_options(tag)).merge(:joins => 'JOIN images ON images.id = attachments.image_id')
               query = query.map { |a| a.image }
             end
-            return (query && images).first
+            image = (tag.locals.images && query).first
           else
-            return Image.first image_conditions(tag).merge(image_options(tag))
+            image = Image.first image_conditions(tag).merge(image_options(tag))
           end
+          
+          image
         end
         
         private
@@ -61,7 +60,7 @@ module Images
             :order  => "#{attr[:by]  || 'position'} #{attr[:order] || 'asc'}",
             :limit  => attr[:limit]  || nil,
             :offset => attr[:offset] || nil
-          }
+          }          
         end
         
         def image_conditions(tag)

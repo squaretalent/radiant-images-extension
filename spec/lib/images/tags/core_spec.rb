@@ -40,7 +40,7 @@ describe Images::Tags::Core do
     end
       
     it 'should not render its contents when there are no images' do
-      mock(Images::Tags::Helpers).current_images(anything) { [] }
+      mock(Images::Tags::Helper).current_images(anything) { [] }
       input    = '<r:images><r:if_images>failure</r:if_images></r:images>'
       expected = ''
       pages(:home).should render(input).as(expected)
@@ -51,7 +51,7 @@ describe Images::Tags::Core do
   describe '<r:images:unless_images>' do
       
     it 'should render its contents when there are no images' do
-      mock(Images::Tags::Helpers).current_images(anything) { [] }
+      mock(Images::Tags::Helper).current_images(anything) { [] }
       input    = '<r:images><r:unless_images>success</r:unless_images></r:images>'
       expected = 'success'
       pages(:home).should render(input).as(expected)
@@ -74,7 +74,7 @@ describe Images::Tags::Core do
     end
     
     it 'should not expand its contents if there are no images available' do
-      mock(Images::Tags::Helpers).current_images(anything) { [] }
+      mock(Images::Tags::Helper).current_images(anything) { [] }
       input    = '<r:images:each>test </r:images:each>'
       expected = ''
       pages(:home).should render(input).as(expected)
@@ -148,14 +148,14 @@ describe Images::Tags::Core do
       pages(:home).should render(input).as(expected)
     end
     
-    it 'should render the url with the default style if not specified' do
+    it 'should render the url with the default filter if not specified' do
       input    = '<r:image title="fourth"><r:url /></r:image>'
       expected = '/images/fourth-original.png'
       pages(:home).should render(input).as(expected)
     end
     
-    it 'should render the url with the style specified by the user' do
-      input    = '<r:image title="first"><r:url style="icon" /></r:image>'
+    it 'should render the url with the filter specified by the user' do
+      input    = '<r:image title="first"><r:url filter="icon" /></r:image>'
       expected = '/images/first-icon.png'
       pages(:home).should render(input).as(expected)
     end
@@ -170,14 +170,14 @@ describe Images::Tags::Core do
       pages(:home).should render(input).as(expected)
     end
     
-    it 'should render the img tag with the default style if not specified' do
+    it 'should render the img tag with the default filter if not specified' do
       input    = '<r:image title="first"><r:tag /></r:image>'
       expected = '<img src="/images/first-original.png" />'
       pages(:home).should render(input).as(expected)
     end
     
-    it 'should render the img tag with the style specified by the user' do
-      input    = '<r:image title="second"><r:tag style="icon"/></r:image>'
+    it 'should render the img tag with the filter specified by the user' do
+      input    = '<r:image title="second"><r:tag filter="icon"/></r:image>'
       expected = '<img src="/images/second-icon.png" />'
       pages(:home).should render(input).as(expected)
     end
