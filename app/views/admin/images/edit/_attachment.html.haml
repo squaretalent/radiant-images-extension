@@ -1,0 +1,8 @@
+%li.attachment{:id => "attachment_#{attachment.id}", :'data-image_id' => attachment.image.id, :'data-attachment_id' => attachment.id }
+  .wrapper
+    %span.buffer
+    = image_tag attachment.image.url(:preview)
+  %span.title= truncate(attachment.image.title, 30, '...')
+  %span.caption= attachment.image.caption
+  .actions
+    = image_tag '/images/admin/minus.png', :class => 'delete'

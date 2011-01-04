@@ -10,7 +10,7 @@
       %h2.modify Modify
   
     %ul#images
-      = render @images
+      = render :partial => '/admin/images/index/image', :collection => @images
 
 #actions
-  = render 'bottom'
+  = render '/admin/images/index/bottom'

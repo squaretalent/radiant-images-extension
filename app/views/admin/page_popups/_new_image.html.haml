@@ -1,0 +1,22 @@
+#new_image_popup.popup
+  %h3.title Upload New Image
+
+  .popup_content
+    - @attachment = Attachment.new(:image => Image.new())
+    - form_for @attachment, :url => [:admin, @attachment], :html => { :method => "post", :multipart => true, :id => 'attachment_form' } do |f|
+      = f.hidden_field :page_id, :value => @page.id
+      %ol
+        - f.fields_for :image do |fi|
+          %li.title
+            = fi.label :title, t('name')
+            = fi.text_field :title, :class => 'clearable'
+          %li.caption
+            = fi.label :caption, t('caption')
+            = fi.text_field :caption, :class => 'clearable'
+          %li.file
+            = fi.file_field :asset, :class => 'clearable'
+        
+        %li.submit
+          = f.submit 'Create'
+
+  %a#new_image_popup_close.close{ :href => '#new_image_popup' }

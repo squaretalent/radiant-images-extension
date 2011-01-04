@@ -1,0 +1,7 @@
+#browse_images_popup.popup
+  %h3.title Browse Images
+
+  %ol#images
+    = render :partial => '/admin/images/edit/image', :collection => model.available_images
+
+  %a#browse_images_popup_close.close{ :href => '#browse_images_popup_close' }

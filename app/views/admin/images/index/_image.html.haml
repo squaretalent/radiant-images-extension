@@ -1,0 +1,9 @@
+%li.image{:id => "image_#{image.id}", :'data-id' => image.id}
+  .attributes
+    .image.attribute
+      - link_to [:edit_admin, image], :title => image.title do
+        = image_tag image.url(:icon), :class => "icon"
+    .title.attribute
+      = link_to image.title, [:edit_admin, image]
+    .actions.attribute
+      = link_to image('minus') + ' ' + t('remove'), [:remove_admin, image], :class => "action"

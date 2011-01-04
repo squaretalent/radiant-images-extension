@@ -1,0 +1,10 @@
+- unless model.new_record?
+
+  = link_to "#{image('plus')} #{t('new_image')}", '#new_image_popup', :class => 'popup button', :id => "new_image_popup_button"
+  = link_to t('browse_images'), '#browse_images_popup', :class => 'popup button', :id => "browse_images_popup_button"
+  
+  %ol#attachments
+    = render :partial => '/admin/images/edit/attachment', :collection => model.attachments
+  
+- else
+  %p Save the page to add images.

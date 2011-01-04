@@ -1,0 +1,14 @@
+- @page_title = @image.title.titleize + ' - ' + default_page_title
+
+- render_region :top do |top|
+  - top.title do
+    %h1 Edit Image
+
+- form_for [:admin, @image], :html => { :multipart => true, :id => 'edit_image', 'data-onsubmit_status'=>"Saving Changes&#8230;"} do |fields|
+  #asset
+    = render :partial => '/admin/images/edit/fields_top', :locals => { :fields => fields }
+  #fields
+    = render :partial => '/admin/images/edit/fields',     :locals => { :fields => fields }
+
+  #fields_bottom
+    = render :partial => '/admin/images/edit/fields_bottom'

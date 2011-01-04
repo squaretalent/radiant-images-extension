@@ -1,0 +1,6 @@
+%li.image{:id => "image_#{image.id}", :'data-image_id' => image.id }
+  .wrapper
+    %span.buffer
+    = image_tag image.url(:preview)
+  %span.title= truncate(image.title, 30, '...')
+  %span.caption= image.caption

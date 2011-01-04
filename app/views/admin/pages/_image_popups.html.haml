@@ -1,0 +1,5 @@
+- unless model.new_record?
+  = hidden_field_tag 'page_id', @page.id
+  #popups{:style=>"display:none"}
+    = render '/admin/page_popups/new_image'
+    = render '/admin/page_popups/browse_images'
