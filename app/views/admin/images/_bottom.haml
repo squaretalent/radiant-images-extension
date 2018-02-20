@@ -1,8 +1,0 @@
-%ul
-  - render_region :bottom do |bottom|
-    - bottom.create do
-      %li
-        = link_to image('plus') + " " + t("new_image"), new_admin_image_path
-- render_region :paginate do |paginate|
-  - paginate.pagination do
-    = pagination_for(@images)
